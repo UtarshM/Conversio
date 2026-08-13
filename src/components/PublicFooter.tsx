@@ -5,16 +5,54 @@ import {
   CheckCircle2,
   Lock,
   Sparkles,
-  Bot,
 } from "lucide-react";
+
+const clientLogos = [
+  { name: "L&T", src: "/clients/L&T.jpg" },
+  { name: "Indian Oil", src: "/clients/Indian_Oil_Logo.svg.png" },
+  { name: "GMM Pfaudler", src: "/clients/GMM Pfaudler.png" },
+  { name: "ACG Pharma", src: "/clients/ACG Pharma.png" },
+  { name: "Cybernetik", src: "/clients/Cybernetik.png" },
+  { name: "Indo MIM", src: "/clients/Indo MIM.jfif" },
+  { name: "Vulkan", src: "/clients/Vulkan.png" },
+  { name: "Gansons", src: "/clients/Gansons.jpg" },
+  { name: "Surya", src: "/clients/Surya.png" },
+  { name: "Standard Glass", src: "/clients/Standard glass.png" },
+  { name: "Metal Forms", src: "/clients/Metal forms.png" },
+  { name: "Bioaspire", src: "/clients/Bioaspire.png" },
+];
 
 export function PublicFooter() {
   return (
     <footer className="bg-slate-950 text-slate-300 font-sans border-t border-slate-800 text-left pt-16 pb-12 px-6">
       <div className="container mx-auto max-w-7xl">
+        
+        {/* TRUSTED CLIENT LOGOS BANNER */}
+        <div className="mb-14 pb-12 border-b border-slate-800/80">
+          <div className="text-center space-y-2 mb-8">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest font-mono">
+              TRUSTED BY 700+ ENTERPRISE &amp; D2C BRANDS
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-80 hover:opacity-100 transition-opacity">
+            {clientLogos.map((client) => (
+              <div
+                key={client.name}
+                className="h-10 px-4 py-2 bg-slate-900/90 border border-slate-800 rounded-xl flex items-center justify-center hover:border-emerald-500/50 transition-all group"
+              >
+                <img
+                  src={client.src}
+                  alt={client.name}
+                  className="max-h-6 max-w-[100px] object-contain filter grayscale group-hover:grayscale-0 transition-all brightness-110"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
           
-          {/* COLUMN 1: Brand, Badges, Meta Partner, Parent Company & AI assistant */}
+          {/* COLUMN 1: Brand, Official Meta Partner Badge, Parent Company */}
           <div className="lg:col-span-2 space-y-6">
             
             {/* Brand Logo & Tagline */}
@@ -31,7 +69,7 @@ export function PublicFooter() {
               </div>
             </div>
 
-            {/* G2 High Performer Badges & Trust Seals */}
+            {/* G2 High Performer Badges & Security Seals */}
             <div className="space-y-3 pt-1">
               <div className="flex flex-wrap gap-2 text-[10px] font-mono">
                 <span className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-md font-bold flex items-center gap-1">
@@ -48,7 +86,7 @@ export function PublicFooter() {
                 </span>
               </div>
 
-              {/* Compliance ISO + Meta Partner Badge */}
+              {/* Compliance ISO */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200">
                   <Lock className="w-3.5 h-3.5 text-blue-400" />
@@ -63,14 +101,16 @@ export function PublicFooter() {
                 </div>
               </div>
 
-              {/* Official Meta Business Partner Emblem */}
-              <div className="p-3 bg-gradient-to-r from-blue-950/60 to-slate-900 border border-blue-500/30 rounded-2xl flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs font-mono">
-                  ♾️
-                </div>
-                <div>
+              {/* DOWNLOADED OFFICIAL META BUSINESS PARTNER LOGO BADGE */}
+              <div className="p-3.5 bg-slate-900/90 border border-blue-500/30 rounded-2xl flex items-center justify-between gap-4 max-w-sm shadow-inner">
+                <img
+                  src="/home/meta-partner-badge.avif"
+                  alt="Meta Business Partner"
+                  className="h-12 w-auto object-contain rounded-lg bg-white p-1"
+                />
+                <div className="text-right">
                   <span className="text-xs font-bold text-white tracking-wide block">Meta Business Partner</span>
-                  <span className="text-[10px] text-slate-400 font-mono">Official WhatsApp Cloud API Partner</span>
+                  <span className="text-[10px] text-slate-400 font-mono block">Official WhatsApp Cloud API</span>
                 </div>
               </div>
             </div>

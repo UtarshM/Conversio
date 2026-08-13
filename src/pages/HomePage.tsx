@@ -112,6 +112,8 @@ export default function HomePage() {
   const suiteAddonsPrice = 
     (suiteAddons.aiCalling ? 999 : 0) + 
     (suiteAddons.aiChatbot ? 1499 : 0);
+  const suiteTotalPrice = suiteBasePrice + suiteAddonsPrice;
+
   useEffect(() => {
     document.title = "Conversio AI — AI Revenue OS & WhatsApp Automation for D2C Brands";
   }, []);

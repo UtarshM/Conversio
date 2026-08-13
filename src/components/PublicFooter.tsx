@@ -101,16 +101,16 @@ export function PublicFooter() {
                 </div>
               </div>
 
-              {/* DOWNLOADED OFFICIAL META BUSINESS PARTNER LOGO BADGE */}
-              <div className="p-3.5 bg-slate-900/90 border border-blue-500/30 rounded-2xl flex items-center justify-between gap-4 max-w-sm shadow-inner">
+              {/* OFFICIAL META BUSINESS PARTNER LOGO BADGE */}
+              <div className="p-2.5 bg-slate-900/90 border border-blue-500/40 rounded-2xl flex items-center gap-4 max-w-sm shadow-md hover:border-blue-400 transition-colors">
                 <img
-                  src="/home/meta-partner-badge.avif"
+                  src="/home/meta-badge-dark.png"
                   alt="Meta Business Partner"
-                  className="h-12 w-auto object-contain rounded-lg bg-white p-1"
+                  className="h-11 w-auto object-contain"
                 />
-                <div className="text-right">
-                  <span className="text-xs font-bold text-white tracking-wide block">Meta Business Partner</span>
-                  <span className="text-[10px] text-slate-400 font-mono block">Official WhatsApp Cloud API</span>
+                <div className="border-l border-slate-800 pl-3">
+                  <span className="text-[11px] font-bold text-slate-200 block">Official Tech Partner</span>
+                  <span className="text-[10px] text-emerald-400 font-mono block">WhatsApp Cloud API</span>
                 </div>
               </div>
             </div>

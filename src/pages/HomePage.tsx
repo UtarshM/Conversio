@@ -91,9 +91,9 @@ export default function HomePage() {
 
   // Price calculations based on selected add-ons
   const [waAddons, setWaAddons] = useState({
-    aiCalling: true,
-    aiChatbot: true,
-    conversioPass: true,
+    aiCalling: false,
+    aiChatbot: false,
+    conversioPass: false,
   });
 
   const [suiteAddons, setSuiteAddons] = useState({

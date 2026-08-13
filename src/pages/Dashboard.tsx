@@ -65,7 +65,7 @@ export default function Dashboard() {
                   Workspace command center
                 </div>
                 <h1 className="mt-5 text-3xl lg:text-4xl font-display font-bold tracking-tight text-foreground">
-                  AI-Native WhatsApp Marketing &amp; Retention Dashboard
+                  AI-Native WhatsApp Marketing &amp; Conversion Dashboard
                 </h1>
                 <p className="mt-4 text-muted-foreground max-w-2xl">
                   Your Conversio workspace enables deep Shopify sync, automated abandoned cart recovery, COD confirmation calls via AI Voice agents, and omnichannel CRM.

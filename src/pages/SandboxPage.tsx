@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PublicNavbar } from "@/components/PublicNavbar";
 import { PublicFooter } from "@/components/PublicFooter";
@@ -70,6 +70,10 @@ export default function SandboxPage() {
   // Demo 4 State: Omnichannel Sequence
   const [omniCustomer, setOmniCustomer] = useState("Ananya");
   const [omniStep, setOmniStep] = useState<number>(3);
+
+  useEffect(() => {
+    document.title = "Conversio AI Playground & Interactive Simulator | Test WhatsApp Automation & Voice";
+  }, []);
 
   const handleCalculateIntent = () => {
     setIsCalculating(true);

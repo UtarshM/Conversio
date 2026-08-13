@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PublicNavbar } from "@/components/PublicNavbar";
 import { PublicFooter } from "@/components/PublicFooter";
@@ -58,6 +58,10 @@ export default function OmnichannelPage() {
     { name: "SMS / RCS", icon: Smartphone, color: "text-cyan-800 bg-cyan-50 border-cyan-200" },
     { name: "Email Sequence", icon: Mail, color: "text-rose-800 bg-rose-50 border-rose-200" },
   ];
+
+  useEffect(() => {
+    document.title = "Conversio AI — Omnichannel Marketing Architecture & Intent Pipeline";
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans flex flex-col justify-between selection:bg-emerald-500 selection:text-black">

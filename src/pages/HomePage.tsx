@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate, Link } from "react-router-dom";
@@ -76,7 +76,7 @@ const pillars = [
   },
   {
     icon: ShoppingCart,
-    title: "E-Commerce Retention & Cart Recovery",
+    title: "E-Commerce Conversion & Cart Recovery",
     desc: "Recover abandoned checkouts automatically via pre-built multi-step WhatsApp triggers, dynamic discount codes, and payment links.",
   },
   {
@@ -112,7 +112,9 @@ export default function HomePage() {
   const suiteAddonsPrice = 
     (suiteAddons.aiCalling ? 999 : 0) + 
     (suiteAddons.aiChatbot ? 1499 : 0);
-  const suiteTotalPrice = suiteBasePrice + suiteAddonsPrice;
+  useEffect(() => {
+    document.title = "Conversio AI — AI Revenue OS & WhatsApp Automation for D2C Brands";
+  }, []);
 
   return (
     <div className="min-h-screen bg-white font-sans text-[#111111] overflow-x-hidden">
@@ -132,7 +134,7 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[76px] font-display font-extrabold tracking-tight text-[#111111] max-w-5xl mx-auto leading-[1.08] mb-6">
-            AI-Native WhatsApp Marketing &amp; Retention Platform for D2C Brands
+            AI-Native WhatsApp Marketing &amp; Conversion Platform for D2C Brands
           </h1>
 
           <p className="text-lg md:text-[21px] text-slate-600 max-w-3xl mx-auto mb-10 leading-[1.6]">

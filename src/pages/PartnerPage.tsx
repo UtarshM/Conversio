@@ -54,7 +54,7 @@ const partnerStats = [
   { value: "500+", label: "Partners" },
   { value: "50+", label: "Countries" },
   { value: "20Cr+", label: "Revenue Generated" },
-  { value: "95%", label: "Partner Retention" },
+  { value: "95%", label: "Partner Success Rate" },
 ];
 
 const partnershipModels = [

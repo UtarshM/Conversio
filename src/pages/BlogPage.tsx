@@ -161,7 +161,7 @@ export default function BlogPage() {
             Conversio Playbooks &amp; Insights
           </Badge>
           <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-slate-900 tracking-tight mb-4">
-            E-Commerce Retention &amp; WhatsApp Growth Playbooks
+            E-Commerce Conversion &amp; WhatsApp Growth Playbooks
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
             Tactics, case studies, and guides on recovering abandoned carts, eliminating RTO losses, and scaling D2C sales with Conversio AI.

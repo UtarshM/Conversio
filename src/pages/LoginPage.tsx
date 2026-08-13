@@ -86,7 +86,7 @@ export default function LoginPage() {
           </div>
 
           <h1 className="text-4xl font-display font-extrabold text-slate-900 leading-tight">
-            Scale D2C Marketing &amp; E-Commerce Retention
+            Scale D2C Marketing &amp; E-Commerce Conversion
           </h1>
           <p className="text-slate-600 text-sm leading-relaxed font-normal">
             Automate repeat orders, recover abandoned carts via WhatsApp, and verify COD orders with conversational AI voice calling.

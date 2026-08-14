@@ -17,7 +17,14 @@ import {
   Code2,
   RefreshCw,
   Sparkles,
-  Key
+  GitBranch,
+  FolderLock,
+  Clock,
+  Radio,
+  FileCode,
+  HardDrive,
+  CheckCircle2,
+  Lock,
 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import { useSearchParams } from "react-router-dom";
@@ -83,11 +90,23 @@ const mockExtensions = [
   { name: "pgcrypto", desc: "Cryptographic functions for password hashing & encryption", enabled: true },
 ];
 
+const mockBuckets = [
+  { name: "public-assets", public: true, files: 1240, size: "1.2 GB" },
+  { name: "customer-documents", public: false, files: 340, size: "840 MB" },
+  { name: "ai-knowledge-docs", public: false, files: 92, size: "240 MB" },
+];
+
+const mockFunctions = [
+  { name: "payment-webhook", runtime: "TypeScript (Deno)", status: "Active", invocations: "42.1k", avgDuration: "14ms" },
+  { name: "whatsapp-intent-handler", runtime: "TypeScript (Deno)", status: "Active", invocations: "128.4k", avgDuration: "28ms" },
+  { name: "generate-embedding-vector", runtime: "Python 3.11", status: "Active", invocations: "18.2k", avgDuration: "140ms" },
+];
+
 export default function DatabaseStudioPage() {
   const [searchParams] = useSearchParams();
   const initialTab = searchParams.get("tab") || "tables";
-  const [activeTab, setActiveTab] = useState<"tables" | "sql" | "designer" | "extensions" | "rls">(initialTab as any);
-  
+  const [activeTab, setActiveTab] = useState<"tables" | "sql" | "designer" | "extensions" | "rls" | "storage" | "functions" | "branching">(initialTab as any);
+
   const [selectedTable, setSelectedTable] = useState<string>("contacts");
   const [sqlQuery, setSqlQuery] = useState<string>("SELECT * FROM contacts WHERE created_at > NOW() - INTERVAL '7 days' LIMIT 50;");
   const [sqlResults, setSqlResults] = useState<any[] | null>([
@@ -110,140 +129,177 @@ export default function DatabaseStudioPage() {
   };
 
   const toggleExtension = (name: string) => {
-    setExtensions(extensions.map(ext => ext.name === name ? { ...ext, enabled: !ext.enabled } : ext));
+    setExtensions(prev =>
+      prev.map(ext => ext.name === name ? { ...ext, enabled: !ext.enabled } : ext)
+    );
     toast({
-      title: "Extension State Changed",
-      description: `PostgreSQL extension "${name}" updated.`,
+      title: "Extension Updated",
+      description: `Toggled status for ${name}.`,
     });
   };
 
+  const activeTableSchema = mockTables.find(t => t.name === selectedTable) || mockTables[0];
+
   return (
     <DashboardLayout>
-      <div className="space-y-6 p-6 max-w-7xl mx-auto">
-        {/* Top Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+      <div className="space-y-6 text-left">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-border pb-5">
           <div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
-                PostgreSQL 16.2
+              <Badge variant="outline" className="font-mono text-[10px] uppercase text-emerald-600 bg-emerald-50 border-emerald-200">
+                POSTGRESQL 16.2 BAAS
               </Badge>
-              <span className="text-xs text-slate-400 font-mono">Project: conversio-core-production</span>
+              <Badge variant="outline" className="font-mono text-[10px] uppercase text-blue-600 bg-blue-50 border-blue-200">
+                PGVECTOR ACTIVE
+              </Badge>
             </div>
-            <h1 className="text-2xl font-display font-bold text-slate-900 mt-1">Database Studio</h1>
+            <h1 className="text-2xl font-bold font-display tracking-tight mt-1 text-foreground">Conversio Database Studio</h1>
+            <p className="text-muted-foreground text-xs">Direct Postgres table manager, SQL runner, RLS policy builder, Storage &amp; Edge Functions.</p>
           </div>
 
-          {/* Navigation Tabs */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
-            <button
-              onClick={() => setActiveTab("tables")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === "tables" ? "bg-white text-slate-900 shadow-sm" : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              <TableIcon className="w-3.5 h-3.5 inline mr-1.5" /> Table Editor
-            </button>
-            <button
-              onClick={() => setActiveTab("sql")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === "sql" ? "bg-white text-slate-900 shadow-sm" : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              <Terminal className="w-3.5 h-3.5 inline mr-1.5" /> SQL Console
-            </button>
-            <button
-              onClick={() => setActiveTab("designer")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === "designer" ? "bg-white text-slate-900 shadow-sm" : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5 inline mr-1.5" /> ER Schema
-            </button>
-            <button
-              onClick={() => setActiveTab("extensions")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === "extensions" ? "bg-white text-slate-900 shadow-sm" : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              <Zap className="w-3.5 h-3.5 inline mr-1.5" /> Extensions
-            </button>
-            <button
-              onClick={() => setActiveTab("rls")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === "rls" ? "bg-white text-slate-900 shadow-sm" : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              <ShieldCheck className="w-3.5 h-3.5 inline mr-1.5" /> RLS Security
-            </button>
+          <div className="flex items-center gap-2">
+            <Button size="sm" variant="outline" className="text-xs h-9 font-medium" onClick={() => setActiveTab("sql")}>
+              <Terminal className="w-3.5 h-3.5 mr-1.5 text-emerald-600" /> Open SQL Editor
+            </Button>
+            <Button size="sm" className="bg-primary text-primary-foreground font-medium text-xs h-9">
+              <Plus className="w-3.5 h-3.5 mr-1.5" /> New Table
+            </Button>
           </div>
         </div>
 
-        {/* TAB 1: Table Editor */}
-        {activeTab === "tables" && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {/* Sidebar Tables List */}
-            <div className="p-4 bg-white rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Tables ({mockTables.length})</span>
-                <Button variant="ghost" size="sm" className="h-7 text-xs text-emerald-600">
-                  <Plus className="w-3.5 h-3.5 mr-1" /> Table
-                </Button>
-              </div>
+        {/* Tab Navigation */}
+        <div className="flex flex-wrap items-center gap-1 border-b border-border pb-2 font-mono text-xs">
+          <button
+            onClick={() => setActiveTab("tables")}
+            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-colors ${
+              activeTab === "tables" ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <TableIcon className="w-3.5 h-3.5" /> Table Editor
+          </button>
+          <button
+            onClick={() => setActiveTab("sql")}
+            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-colors ${
+              activeTab === "sql" ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <Terminal className="w-3.5 h-3.5" /> SQL Editor
+          </button>
+          <button
+            onClick={() => setActiveTab("designer")}
+            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-colors ${
+              activeTab === "designer" ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <Code2 className="w-3.5 h-3.5" /> ERD Schema Designer
+          </button>
+          <button
+            onClick={() => setActiveTab("rls")}
+            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-colors ${
+              activeTab === "rls" ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5" /> RLS Security
+          </button>
+          <button
+            onClick={() => setActiveTab("storage")}
+            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-colors ${
+              activeTab === "storage" ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <HardDrive className="w-3.5 h-3.5" /> Object Storage
+          </button>
+          <button
+            onClick={() => setActiveTab("functions")}
+            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-colors ${
+              activeTab === "functions" ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <FileCode className="w-3.5 h-3.5" /> Edge Functions
+          </button>
+          <button
+            onClick={() => setActiveTab("branching")}
+            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-colors ${
+              activeTab === "branching" ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <GitBranch className="w-3.5 h-3.5" /> DB Branching
+          </button>
+          <button
+            onClick={() => setActiveTab("extensions")}
+            className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-colors ${
+              activeTab === "extensions" ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground hover:bg-accent"
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" /> Extensions
+          </button>
+        </div>
 
+        {/* TAB 1: TABLE EDITOR */}
+        {activeTab === "tables" && (
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <div className="md:col-span-3 border border-border rounded-xl p-3 bg-card space-y-2">
+              <span className="text-[10px] font-bold text-muted-foreground font-mono uppercase tracking-wider block px-2">TABLES ({mockTables.length})</span>
               <div className="space-y-1">
-                {mockTables.map((tbl) => (
+                {mockTables.map(t => (
                   <button
-                    key={tbl.name}
-                    onClick={() => setSelectedTable(tbl.name)}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${
-                      selectedTable === tbl.name ? "bg-emerald-50 text-emerald-700 font-semibold" : "text-slate-600 hover:bg-slate-50"
+                    key={t.name}
+                    onClick={() => setSelectedTable(t.name)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono flex items-center justify-between transition-colors ${
+                      selectedTable === t.name ? "bg-accent font-bold text-foreground" : "text-muted-foreground hover:bg-muted"
                     }`}
                   >
-                    <span className="flex items-center gap-2 font-mono">
-                      <TableIcon className="w-3.5 h-3.5 text-slate-400" /> {tbl.name}
+                    <span className="truncate flex items-center gap-1.5">
+                      <TableIcon className="w-3.5 h-3.5 text-emerald-600" /> {t.name}
                     </span>
-                    <span className="text-[10px] text-slate-400">{tbl.rowCount}</span>
+                    <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full">{t.rowCount}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Table Content Spreadsheet View */}
-            <div className="md:col-span-3 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 space-y-4">
-              <div className="flex items-center justify-between border-b pb-4">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 font-mono">public.{selectedTable}</h3>
-                  <p className="text-xs text-slate-400">PostgreSQL Schema Definition &amp; Row Preview</p>
+            <div className="md:col-span-9 border border-border rounded-xl p-4 bg-card space-y-4">
+              <div className="flex justify-between items-center pb-2 border-b border-border">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-bold font-mono text-foreground flex items-center gap-1.5">
+                    <TableIcon className="w-4 h-4 text-emerald-600" /> {activeTableSchema.name}
+                  </h3>
+                  <Badge variant="secondary" className="font-mono text-[10px]">{activeTableSchema.rowCount} rows</Badge>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button size="sm" variant="outline" className="rounded-xl">
-                    <Plus className="w-3.5 h-3.5 mr-1" /> Insert Row
-                  </Button>
-                  <Button size="sm" variant="outline" className="rounded-xl">
-                    <Download className="w-3.5 h-3.5 mr-1" /> Export CSV
-                  </Button>
+                  <Button size="sm" variant="outline" className="h-7 text-xs font-mono">Insert Row</Button>
+                  <Button size="sm" variant="outline" className="h-7 text-xs font-mono"><Download className="w-3 h-3 mr-1" /> Export CSV</Button>
                 </div>
               </div>
 
-              {/* Columns Table */}
-              <div className="overflow-x-auto rounded-2xl border border-slate-100">
-                <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-slate-50 text-slate-700 font-semibold border-b">
+              <div className="overflow-x-auto border border-border rounded-lg">
+                <table className="w-full text-xs font-mono text-left">
+                  <thead className="bg-muted text-muted-foreground uppercase text-[10px] border-b border-border">
                     <tr>
-                      <th className="p-3">COLUMN NAME</th>
-                      <th className="p-3">DATA TYPE</th>
-                      <th className="p-3">PRIMARY KEY</th>
-                      <th className="p-3">NULLABLE</th>
+                      {activeTableSchema.columns.map(c => (
+                        <th key={c.name} className="p-2.5 font-bold">
+                          {c.name} <span className="text-[9px] font-normal text-muted-foreground">({c.type})</span>
+                        </th>
+                      ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {mockTables.find((t) => t.name === selectedTable)?.columns.map((col) => (
-                      <tr key={col.name} className="hover:bg-slate-50/50">
-                        <td className="p-3 font-bold text-slate-900">{col.name}</td>
-                        <td className="p-3 text-emerald-600 font-semibold">{col.type}</td>
-                        <td className="p-3">{col.isPrimary ? <Badge className="bg-amber-100 text-amber-800 border-none">PK</Badge> : "-"}</td>
-                        <td className="p-3 text-slate-400">{col.isNullable ? "YES" : "NO"}</td>
-                      </tr>
-                    ))}
+                  <tbody className="divide-y divide-border text-foreground">
+                    <tr>
+                      <td className="p-2.5 font-bold text-emerald-600">c-9011a</td>
+                      <td className="p-2.5">+919825012345</td>
+                      <td className="p-2.5">Rahul Makwana</td>
+                      <td className="p-2.5 text-muted-foreground">ws-prod-01</td>
+                      <td className="p-2.5 text-muted-foreground">2026-08-14 00:12:00</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2.5 font-bold text-emerald-600">c-9012b</td>
+                      <td className="p-2.5">+919811122233</td>
+                      <td className="p-2.5">Ananya Roy</td>
+                      <td className="p-2.5 text-muted-foreground">ws-prod-01</td>
+                      <td className="p-2.5 text-muted-foreground">2026-08-14 00:15:30</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -251,50 +307,43 @@ export default function DatabaseStudioPage() {
           </div>
         )}
 
-        {/* TAB 2: SQL Console */}
+        {/* TAB 2: SQL EDITOR */}
         {activeTab === "sql" && (
           <div className="space-y-4">
-            <div className="bg-slate-900 rounded-3xl p-4 text-white space-y-3 shadow-xl">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-slate-400">PostgreSQL Editor / Executable Console</span>
-                <Button
-                  onClick={handleExecuteSql}
-                  disabled={isExecutingSql}
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl"
-                >
-                  <Play className="w-3.5 h-3.5 mr-1.5 fill-current" /> {isExecutingSql ? "Executing..." : "Run SQL Query"}
+            <div className="border border-border rounded-xl p-4 bg-slate-950 text-slate-100 font-mono text-xs space-y-3 shadow-inner">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-800">
+                <span className="text-slate-400 flex items-center gap-1.5">
+                  <Terminal className="w-4 h-4 text-emerald-400" /> SQL Query Runner
+                </span>
+                <Button size="sm" onClick={handleExecuteSql} disabled={isExecutingSql} className="bg-emerald-500 hover:bg-emerald-400 text-black font-bold h-8 text-xs">
+                  <Play className="w-3.5 h-3.5 mr-1" /> {isExecutingSql ? "Executing..." : "Run Query (Ctrl+Enter)"}
                 </Button>
               </div>
-
               <textarea
-                rows={5}
                 value={sqlQuery}
-                onChange={(e) => setSqlQuery(e.target.value)}
-                className="w-full bg-slate-950 text-emerald-400 font-mono text-sm p-4 rounded-2xl border border-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                onChange={e => setSqlQuery(e.target.value)}
+                rows={5}
+                className="w-full bg-transparent border-none text-emerald-300 focus:outline-none font-mono text-xs leading-relaxed resize-none"
               />
             </div>
 
-            {/* Query Results */}
             {sqlResults && (
-              <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm space-y-3">
-                <div className="flex items-center justify-between text-xs text-slate-500 font-mono">
-                  <span>QUERY RESULTS (3 ROWS)</span>
-                  <span>Execution Time: 14ms</span>
-                </div>
-                <div className="overflow-x-auto rounded-2xl border border-slate-100">
-                  <table className="w-full text-left text-xs font-mono">
-                    <thead className="bg-slate-50 text-slate-700 font-semibold border-b">
+              <div className="border border-border rounded-xl p-4 bg-card space-y-2">
+                <span className="text-xs font-mono font-bold text-muted-foreground uppercase">Query Results (3 rows returned)</span>
+                <div className="overflow-x-auto border border-border rounded-lg">
+                  <table className="w-full text-xs font-mono text-left">
+                    <thead className="bg-muted text-muted-foreground uppercase text-[10px]">
                       <tr>
-                        {Object.keys(sqlResults[0] || {}).map((key) => (
-                          <th key={key} className="p-3 uppercase">{key}</th>
+                        {Object.keys(sqlResults[0] || {}).map(k => (
+                          <th key={k} className="p-2.5 font-bold">{k}</th>
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {sqlResults.map((row, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50/50">
-                          {Object.values(row).map((val: any, vIdx) => (
-                            <td key={vIdx} className="p-3 text-slate-800">{String(val)}</td>
+                    <tbody className="divide-y divide-border">
+                      {sqlResults.map((r, i) => (
+                        <tr key={i}>
+                          {Object.values(r).map((v: any, j) => (
+                            <td key={j} className="p-2.5 text-foreground">{String(v)}</td>
                           ))}
                         </tr>
                       ))}
@@ -306,65 +355,95 @@ export default function DatabaseStudioPage() {
           </div>
         )}
 
-        {/* TAB 3: Extensions Manager */}
-        {activeTab === "extensions" && (
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 space-y-6">
-            <div>
-              <h3 className="text-lg font-bold text-slate-900">PostgreSQL Extensions Marketplace</h3>
-              <p className="text-xs text-slate-500">Enable advanced database functions like Vector Search, PostGIS, or Fuzzy Trigram Match with one click.</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {extensions.map((ext) => (
-                <div key={ext.name} className="p-5 border border-slate-200/80 rounded-2xl flex items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900 font-mono text-sm">{ext.name}</span>
-                      {ext.name === "pgvector" && (
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200">AI Vector Enabled</Badge>
-                      )}
-                    </div>
-                    <p className="text-xs text-slate-500">{ext.desc}</p>
+        {/* TAB 3: OBJECT STORAGE */}
+        {activeTab === "storage" && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {mockBuckets.map(b => (
+                <div key={b.name} className="p-4 border border-border rounded-xl bg-card space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="font-mono text-xs font-bold text-foreground flex items-center gap-1.5">
+                      <HardDrive className="w-4 h-4 text-emerald-600" /> {b.name}
+                    </span>
+                    <Badge variant={b.public ? "secondary" : "outline"} className="text-[10px] font-mono">
+                      {b.public ? "Public CDN" : "Private RLS"}
+                    </Badge>
                   </div>
-                  <Button
-                    size="sm"
-                    variant={ext.enabled ? "default" : "outline"}
-                    onClick={() => toggleExtension(ext.name)}
-                    className={ext.enabled ? "bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl" : "rounded-xl"}
-                  >
-                    {ext.enabled ? <Check className="w-3.5 h-3.5 mr-1" /> : <Plus className="w-3.5 h-3.5 mr-1" />}
-                    {ext.enabled ? "Enabled" : "Enable"}
-                  </Button>
+                  <div className="flex justify-between text-xs text-muted-foreground font-mono">
+                    <span>{b.files} files</span>
+                    <span>{b.size} used</span>
+                  </div>
+                  <Button size="sm" variant="outline" className="w-full text-xs h-8">Browse Objects</Button>
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* TAB 4: RLS Security Policy Builder */}
-        {activeTab === "rls" && (
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 space-y-6">
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-600" /> Row Level Security (RLS) Policy Generator
-              </h3>
-              <p className="text-xs text-slate-500">Secure table rows automatically using context variable expressions like <code className="font-mono text-emerald-600">auth.uid()</code>.</p>
+        {/* TAB 4: EDGE FUNCTIONS */}
+        {activeTab === "functions" && (
+          <div className="border border-border rounded-xl p-4 bg-card space-y-4">
+            <div className="flex justify-between items-center pb-2 border-b border-border">
+              <h3 className="text-sm font-bold font-mono">Serverless Edge Functions</h3>
+              <Button size="sm" className="h-8 text-xs"><Plus className="w-3.5 h-3.5 mr-1" /> Deploy Function</Button>
             </div>
-
-            <div className="p-6 bg-slate-900 rounded-2xl text-white space-y-4">
-              <div className="text-xs font-mono text-slate-400">Generated SQL Policy Command:</div>
-              <pre className="text-emerald-400 font-mono text-xs overflow-x-auto p-4 bg-slate-950 rounded-xl border border-slate-800">
-{`CREATE POLICY "Users can only read their own workspace contacts"
-ON public.contacts
-FOR SELECT
-USING (workspace_id = auth.jwt() ->> 'workspace_id');`}
-              </pre>
-              <Button onClick={() => toast({ title: "RLS Policy Applied", description: "Security policy enabled for contacts table." })} className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl">
-                Apply RLS Policy
-              </Button>
+            <div className="space-y-2">
+              {mockFunctions.map(f => (
+                <div key={f.name} className="p-3 border border-border rounded-xl flex items-center justify-between bg-muted/30">
+                  <div className="space-y-0.5">
+                    <span className="font-mono text-xs font-bold text-foreground flex items-center gap-2">
+                      <FileCode className="w-4 h-4 text-purple-600" /> /functions/{f.name}
+                    </span>
+                    <span className="text-[11px] text-muted-foreground font-mono">{f.runtime} • {f.invocations} requests</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono text-emerald-600 font-bold">{f.avgDuration}</span>
+                    <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px]">{f.status}</Badge>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
+
+        {/* TAB 5: DATABASE BRANCHING */}
+        {activeTab === "branching" && (
+          <div className="p-6 border border-border rounded-xl bg-card space-y-4 text-center max-w-xl mx-auto">
+            <GitBranch className="w-10 h-10 text-emerald-600 mx-auto" />
+            <h3 className="text-lg font-bold font-display">Database Branching &amp; Preview Backends</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Create isolated Git-like database branches for pull requests. Test migrations safely before merging to production.
+            </p>
+            <div className="p-3 bg-muted rounded-xl font-mono text-xs text-left space-y-1 border border-border">
+              <span className="text-emerald-600 font-bold">🌿 main (Production Postgres)</span>
+              <div className="pl-4 text-muted-foreground">└── 🌿 feat/add-loyalty-points (Preview Branch #42)</div>
+            </div>
+            <Button className="bg-emerald-600 text-white font-bold text-xs h-9">Create Branch</Button>
+          </div>
+        )}
+
+        {/* TAB 6: EXTENSIONS */}
+        {activeTab === "extensions" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {extensions.map(ext => (
+              <div key={ext.name} className="p-4 border border-border rounded-xl bg-card flex items-start justify-between">
+                <div className="space-y-1 max-w-xs">
+                  <span className="font-mono text-xs font-bold text-foreground block">{ext.name}</span>
+                  <p className="text-[11px] text-muted-foreground leading-snug">{ext.desc}</p>
+                </div>
+                <Button
+                  size="sm"
+                  variant={ext.enabled ? "default" : "outline"}
+                  onClick={() => toggleExtension(ext.name)}
+                  className="text-xs h-8"
+                >
+                  {ext.enabled ? "Enabled" : "Enable"}
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+
       </div>
     </DashboardLayout>
   );

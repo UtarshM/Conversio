@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useNavigate, Link } from "react-router-dom";
 import { PublicNavbar } from "@/components/PublicNavbar";
 import { PublicFooter } from "@/components/PublicFooter";
+import { AeoStructuredData } from "@/components/AeoStructuredData";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -120,6 +121,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-[#111111] overflow-x-hidden">
+      {/* AEO & SEO Structured Data Schemas */}
+      <AeoStructuredData />
+
       {/* Shared Public Floating Navbar */}
       <PublicNavbar />
 

@@ -136,7 +136,7 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[76px] font-display font-extrabold tracking-tight text-[#111111] max-w-5xl mx-auto leading-[1.08] mb-6">
-            AI-Native WhatsApp Marketing &amp; Conversion Platform for D2C Brands
+            AI-Native Conversion &amp; Retention OS for D2C Brands
           </h1>
 
           <p className="text-lg md:text-[21px] text-slate-600 max-w-3xl mx-auto mb-10 leading-[1.6]">

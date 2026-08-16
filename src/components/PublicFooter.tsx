@@ -135,8 +135,10 @@ export function PublicFooter() {
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono border-b border-emerald-500/30 pb-1 inline-block">Quick links</h4>
               <ul className="space-y-2 text-xs text-slate-400 font-medium">
+                <li><Link to="/partner" className="hover:text-white transition-colors">Partner Program</Link></li>
+                <li><Link to="/partner" className="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">Affiliate Program (20% Recurring)</Link></li>
+                <li><Link to="/partners/dashboard" className="hover:text-white transition-colors">Partner Dashboard</Link></li>
                 <li><Link to="/contact" className="hover:text-white transition-colors">Careers</Link></li>
-                <li><Link to="/partner" className="hover:text-white transition-colors">Partner With Us</Link></li>
               </ul>
             </div>
 

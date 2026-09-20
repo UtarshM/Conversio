@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   LayoutDashboard,
   MessageSquare,
@@ -22,7 +23,11 @@ import {
   Sparkles,
   Handshake,
   BadgeCheck,
-  ShoppingBag,
+  PhoneCall,
+  Search,
+  ChevronRight,
+  TrendingUp,
+  FileCheck2,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useNavigate } from "react-router-dom";
@@ -40,224 +45,380 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useAppContext } from "@/context/AppContext";
+import { CommandPaletteModal } from "@/components/CommandPaletteModal";
 
 export function AppSidebar() {
   const { state: sidebarState } = useSidebar();
   const collapsed = sidebarState === "collapsed";
   const navigate = useNavigate();
   const { signOut, user, branding } = useAppContext();
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   const role = user?.role || "USER";
 
-  const mainItems = [
-    { title: "Command Center", url: "/dashboard", icon: LayoutDashboard, roles: ["ADMIN", "PARTNER", "USER"] },
-    { title: "Customer 360", url: "/contacts", icon: Users, roles: ["USER", "ADMIN"] },
-    { title: "Sales CRM Pipeline", url: "/leads", icon: Megaphone, roles: ["USER", "ADMIN"] },
-    { title: "Omnichannel Inbox", url: "/inbox", icon: Inbox, roles: ["USER", "ADMIN"] },
-    { title: "AI Opportunities", url: "/ecommerce-recovery", icon: Sparkles, roles: ["USER", "ADMIN"] },
-    { title: "Automations & Journeys", url: "/automations", icon: Bot, roles: ["USER", "ADMIN"] },
-    { title: "Campaigns & Sequences", url: "/campaigns", icon: MessageSquare, roles: ["USER", "ADMIN"] },
-    { title: "Revenue Attribution", url: "/analytics", icon: BarChart3, roles: ["USER", "ADMIN", "PARTNER"] },
-    { title: "Connect Channels", url: "/connect", icon: Link2, roles: ["USER", "ADMIN"] },
-    { title: "Meta Blue Tick", url: "/green-tick", icon: BadgeCheck, roles: ["USER", "ADMIN"] },
-    { title: "Message Templates", url: "/templates", icon: FileText, roles: ["USER", "ADMIN"] },
-    { title: "Wallet & Billing", url: "/wallet", icon: Wallet, roles: ["USER", "ADMIN"] },
-    { title: "Transactions", url: "/transactions", icon: Receipt, roles: ["USER", "ADMIN", "PARTNER"] },
-    { title: "Reliability & Uptime", url: "/reliability", icon: ShieldAlert, roles: ["USER", "ADMIN"] },
-  ];
-
-  const cloudItems = [
-    { title: "Cloud Projects", url: "/cloud/projects", icon: Database, roles: ["USER", "ADMIN", "PARTNER"] },
-    { title: "Database Studio", url: "/cloud/database", icon: Terminal, roles: ["USER", "ADMIN", "PARTNER"] },
-    { title: "API Explorer", url: "/cloud/api-explorer", icon: Code2, roles: ["USER", "ADMIN", "PARTNER"] },
-    { title: "AI & Vector Studio", url: "/cloud/ai-vector", icon: Sparkles, roles: ["USER", "ADMIN", "PARTNER"] },
-  ];
-
-  const partnerItems = [
-    { title: "Partner Dashboard", url: "/partners/dashboard", icon: Handshake, roles: ["PARTNER", "ADMIN"] },
-    { title: "Branding Settings", url: "/partners/branding", icon: Palette, roles: ["PARTNER"] },
-  ];
-
-  const adminItems = [
-    { title: "Manage Users", url: "/admin/users", icon: UserCog, roles: ["ADMIN"] },
-    { title: "Manage Partners", url: "/partners/manage", icon: UsersRound, roles: ["ADMIN"] },
-  ];
-
-  const filteredMainItems = mainItems.filter(item => item.roles.includes(role));
-  const filteredCloudItems = cloudItems.filter(item => item.roles.includes(role));
-  const filteredPartnerItems = partnerItems.filter(item => item.roles.includes(role));
-  const filteredAdminItems = adminItems.filter(item => item.roles.includes(role));
-
   return (
-    <Sidebar collapsible="icon" className="border-r border-sidebar-border">
-      <SidebarHeader className="p-4">
-        <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-xl gradient-primary flex items-center justify-center flex-shrink-0">
-            {branding?.logoUrl ? (
-              <img src={branding.logoUrl} alt="Logo" className="h-6 w-6 object-contain" />
-            ) : (
-              <MessageSquare className="h-5 w-5 text-primary-foreground" />
-            )}
+    <>
+      <Sidebar collapsible="icon" className="border-r border-[#1a2228] bg-[#0c1014] text-gray-300">
+        <SidebarHeader className="p-3 bg-[#0c1014]">
+          {/* Brand Header */}
+          <div className="flex items-center justify-between gap-2 px-1 py-1">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-[#ea580c] to-[#f97316] flex items-center justify-center flex-shrink-0 shadow-md shadow-orange-500/20">
+                {branding?.logoUrl ? (
+                  <img src={branding.logoUrl} alt="Logo" className="h-5 w-5 object-contain" />
+                ) : (
+                  <span className="text-white font-black text-sm tracking-tighter">RS</span>
+                )}
+              </div>
+              {!collapsed && (
+                <div className="truncate">
+                  <h1 className="font-sans text-sm font-bold text-white leading-tight truncate">
+                    {branding?.brandName || "Conversio"}
+                  </h1>
+                  <p className="text-[10px] text-gray-400 font-medium">Autonomous Revenue OS</p>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Find a page... Ctrl K Search (Benchmarked from RapidSales) */}
           {!collapsed && (
-            <div>
-              <h1 className="font-display text-lg font-bold text-foreground leading-tight">
-                {branding?.brandName || "Conversio"}
-              </h1>
-              <p className="text-xs text-muted-foreground">{branding?.brandName ? "White Label" : "AI Revenue OS"}</p>
+            <div className="mt-2">
+              <button
+                type="button"
+                onClick={() => setCommandPaletteOpen(true)}
+                className="w-full h-8 px-2.5 rounded-lg bg-[#141b21] hover:bg-[#1a242c] border border-white/5 text-xs text-gray-400 hover:text-gray-200 flex items-center justify-between transition-colors cursor-pointer"
+              >
+                <span className="flex items-center gap-2 truncate">
+                  <Search className="w-3.5 h-3.5 text-gray-500" />
+                  <span className="truncate">Find a page...</span>
+                </span>
+                <kbd className="font-mono text-[9px] px-1 py-0.5 rounded bg-white/5 border border-white/10 text-gray-400">
+                  Ctrl K
+                </kbd>
+              </button>
             </div>
           )}
-        </div>
-      </SidebarHeader>
+        </SidebarHeader>
 
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Platform Modules
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
+        <SidebarContent className="bg-[#0c1014] px-2 scrollbar-thin">
+          {/* Primary: Dashboard */}
+          <SidebarGroup className="p-0 pt-1">
             <SidebarMenu>
-              {filteredMainItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <NavLink
+                    to="/dashboard"
+                    end
+                    className="h-9 px-3 rounded-lg text-gray-300 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between font-medium text-xs"
+                    activeClassName="bg-[#ea580c]/15 text-[#f97316] font-bold border-l-2 border-[#ea580c]"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <LayoutDashboard className="h-4 w-4 shrink-0" />
+                      {!collapsed && <span>Dashboard</span>}
+                    </div>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+
+          {/* Group 1: AUDIENCE */}
+          <SidebarGroup className="p-0 pt-3">
+            {!collapsed && (
+              <SidebarGroupLabel className="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider h-6">
+                Audience
+              </SidebarGroupLabel>
+            )}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
                   <SidebarMenuButton asChild>
                     <NavLink
-                      to={item.url}
+                      to="/contacts"
                       end
-                      className="transition-all duration-200 rounded-lg hover:bg-sidebar-accent"
-                      activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
                     >
-                      <item.icon className="mr-2 h-4 w-4" />
-                      {!collapsed && <span>{item.title}</span>}
+                      <div className="flex items-center gap-2.5">
+                        <Users className="h-3.5 w-3.5 shrink-0" />
+                        {!collapsed && <span>Contacts</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
 
-        {filteredCloudItems.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Conversio Cloud (BaaS)
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredCloudItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <NavLink
-                        to={item.url}
-                        end
-                        className="transition-all duration-200 rounded-lg hover:bg-sidebar-accent"
-                        activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                      >
-                        <item.icon className="mr-2 h-4 w-4 text-emerald-500" />
-                        {!collapsed && <span>{item.title}</span>}
-                      </NavLink>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/campaigns"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Megaphone className="h-3.5 w-3.5 shrink-0" />
+                        {!collapsed && <span>Campaigns</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        )}
 
-        {filteredPartnerItems.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Partners
-            </SidebarGroupLabel>
+          {/* Group 2: CHANNELS */}
+          <SidebarGroup className="p-0 pt-3">
+            {!collapsed && (
+              <SidebarGroupLabel className="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider h-6">
+                Channels
+              </SidebarGroupLabel>
+            )}
             <SidebarGroupContent>
               <SidebarMenu>
-                {filteredPartnerItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <NavLink
-                        to={item.url}
-                        end
-                        className="transition-all duration-200 rounded-lg hover:bg-sidebar-accent"
-                        activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                      >
-                        <item.icon className="mr-2 h-4 w-4" />
-                        {!collapsed && <span>{item.title}</span>}
-                      </NavLink>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/ecommerce-recovery"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <PhoneCall className="h-3.5 w-3.5 shrink-0" />
+                        {!collapsed && <span>AI Calling</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/inbox"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <MessageSquare className="h-3.5 w-3.5 shrink-0" />
+                        {!collapsed && <span>WhatsApp</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/automations"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Bot className="h-3.5 w-3.5 shrink-0" />
+                        {!collapsed && <span>Email</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        )}
 
-        {filteredAdminItems.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Admin
-            </SidebarGroupLabel>
+          {/* Group 3: LEADS */}
+          <SidebarGroup className="p-0 pt-3">
+            {!collapsed && (
+              <SidebarGroupLabel className="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider h-6">
+                Leads
+              </SidebarGroupLabel>
+            )}
             <SidebarGroupContent>
               <SidebarMenu>
-                {filteredAdminItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <NavLink
-                        to={item.url}
-                        end
-                        className="transition-all duration-200 rounded-lg hover:bg-sidebar-accent"
-                        activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                      >
-                        <item.icon className="mr-2 h-4 w-4" />
-                        {!collapsed && <span>{item.title}</span>}
-                      </NavLink>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/leads"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Sparkles className="h-3.5 w-3.5 shrink-0 text-amber-400" />
+                        {!collapsed && <span>Qualified Leads</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/contacts"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Inbox className="h-3.5 w-3.5 shrink-0" />
+                        {!collapsed && <span>Platform Leads</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        )}
-      </SidebarContent>
 
-      <SidebarFooter className="p-2">
-        {!collapsed && user && (
-          <div className="mx-2 mb-2 rounded-xl border border-sidebar-border bg-sidebar-accent/50 p-3">
-            <p className="text-sm font-medium text-foreground">{user.name}</p>
-            <div className="flex items-center justify-between">
-              <p className="text-xs text-muted-foreground">{user.email}</p>
-              <span className="text-[10px] font-bold uppercase py-0.5 px-1.5 rounded bg-primary/10 text-primary">
-                {user.role}
-              </span>
+          {/* Group 4: REPORTS */}
+          <SidebarGroup className="p-0 pt-3">
+            {!collapsed && (
+              <SidebarGroupLabel className="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider h-6">
+                Reports
+              </SidebarGroupLabel>
+            )}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/analytics"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <BarChart3 className="h-3.5 w-3.5 shrink-0" />
+                        {!collapsed && <span>Automation Reports</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/analytics"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center justify-between text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <TrendingUp className="h-3.5 w-3.5 shrink-0" />
+                        {!collapsed && <span>Analytics</span>}
+                      </div>
+                      {!collapsed && <ChevronRight className="h-3 w-3 text-gray-600" />}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Operations & Settings Group */}
+          <SidebarGroup className="p-0 pt-3">
+            {!collapsed && (
+              <SidebarGroupLabel className="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider h-6">
+                Operations
+              </SidebarGroupLabel>
+            )}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/templates"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center gap-2.5 text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <FileText className="h-3.5 w-3.5 shrink-0" />
+                      {!collapsed && <span>Templates</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/wallet"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center gap-2.5 text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <Wallet className="h-3.5 w-3.5 shrink-0" />
+                      {!collapsed && <span>Wallet &amp; Billing</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to="/settings"
+                      end
+                      className="h-8 px-3 rounded-lg text-gray-400 hover:bg-[#141b21] hover:text-white transition-all flex items-center gap-2.5 text-xs"
+                      activeClassName="bg-[#141b21] text-white font-semibold"
+                    >
+                      <Settings className="h-3.5 w-3.5 shrink-0" />
+                      {!collapsed && <span>Settings</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        {/* Sidebar Footer: RapidSales User Profile Card */}
+        <SidebarFooter className="p-2 bg-[#0c1014] border-t border-[#1a2228]">
+          <div className="p-2 rounded-xl bg-[#141b21] border border-white/5 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-lg bg-[#b91c1c] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-inner">
+                #
+              </div>
+              {!collapsed && (
+                <div className="truncate">
+                  <p className="text-xs font-semibold text-white truncate">
+                    {user?.name || "Harvey Specter"}
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-mono truncate">
+                    {user?.email || "support@hashtechy.com"}
+                  </p>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <NavLink
-                to="/settings"
-                end
-                className="transition-all duration-200 rounded-lg hover:bg-sidebar-accent"
-                activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+
+            {!collapsed && (
+              <button
+                type="button"
+                onClick={() => {
+                  signOut();
+                  navigate("/login");
+                }}
+                title="Logout"
+                className="text-gray-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-white/5 transition-colors shrink-0"
               >
-                <Settings className="mr-2 h-4 w-4" />
-                {!collapsed && <span>Settings</span>}
-              </NavLink>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              className="text-destructive hover:bg-destructive/10 cursor-pointer"
-              onClick={() => {
-                signOut();
-                navigate("/login");
-              }}
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              {!collapsed && <span>Logout</span>}
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-    </Sidebar>
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        </SidebarFooter>
+      </Sidebar>
+
+      <CommandPaletteModal
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+      />
+    </>
   );
 }

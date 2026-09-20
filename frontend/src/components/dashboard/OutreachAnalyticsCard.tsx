@@ -1,13 +1,11 @@
 import { useState } from "react";
 import {
-  Wallet,
   TrendingUp,
   Users,
   CornerUpLeft,
   RotateCw,
   Calendar,
-  Sparkles,
-  Zap,
+  BarChart2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -38,258 +36,243 @@ const TIMEFRAMES: Timeframe[] = [
 
 export function OutreachAnalyticsCard() {
   const [selectedTimeframe, setSelectedTimeframe] = useState<Timeframe>("All");
-  const [activeChannel, setActiveChannel] = useState<"all" | "whatsapp" | "email" | "call" | "autoreply">("all");
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
 
   const handleRefresh = () => {
     setIsRefreshing(true);
-    setTimeout(() => setIsRefreshing(false), 600);
+    setTimeout(() => setIsRefreshing(false), 500);
   };
+
+  // Smooth spline curve points matching RapidSales screenshot
+  const spendData = [
+    { day: "Sep 01", cost: 12, autoReply: 4 },
+    { day: "Sep 03", cost: 245, autoReply: 38 },
+    { day: "Sep 05", cost: 45, autoReply: 12 },
+    { day: "Sep 07", cost: 168, autoReply: 28 },
+    { day: "Sep 09", cost: 30, autoReply: 8 },
+    { day: "Sep 11", cost: 65, autoReply: 15 },
+    { day: "Sep 13", cost: 140, autoReply: 25 },
+    { day: "Sep 15", cost: 215, autoReply: 42 },
+    { day: "Sep 17", cost: 110, autoReply: 20 },
+    { day: "Sep 19", cost: 185, autoReply: 35 },
+    { day: "Sep 21", cost: 20, autoReply: 5 },
+  ];
 
   return (
     <div className="space-y-6 text-left">
-      {/* Title & Timeframe Filters Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-emerald-400" />
-            Outreach at a Glance
-          </h2>
-          <p className="text-xs text-gray-400 mt-0.5">
-            Real-time multi-channel delivery velocity, recipient response rates, and cost telemetry.
-          </p>
+      {/* Top Header: Dashboard Title & Refresh Button */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-start gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-orange-50 border border-orange-200/80 flex items-center justify-center text-[#ea580c] mt-0.5 shadow-2xs">
+            <BarChart2 className="w-5 h-5 stroke-[2.5]" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 font-sans tracking-tight">Dashboard</h1>
+            <p className="text-xs text-gray-500 font-medium">Your outreach at a glance</p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            className="h-8 px-3 rounded-xl bg-white/[0.03] border-white/10 text-gray-300 hover:text-white hover:bg-white/[0.08] text-xs font-semibold flex items-center gap-1.5"
-          >
-            <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin text-emerald-400" : ""}`} />
-            Refresh
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleRefresh}
+          className="h-8 px-3 rounded-lg bg-white border-gray-200 text-gray-700 hover:bg-gray-50 text-xs font-semibold shadow-2xs flex items-center gap-1.5"
+        >
+          <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin text-[#ea580c]" : "text-gray-500"}`} />
+          Refresh
+        </Button>
       </div>
 
-      {/* Timeframe Pill Selectors (Benchmarked from RapidSales) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+      {/* Timeframe Pill Selectors (Exact RapidSales Screenshot Styling) */}
+      <div className="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none">
         {TIMEFRAMES.map((tf) => (
           <button
             key={tf}
             onClick={() => setSelectedTimeframe(tf)}
-            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-3 py-1 rounded-full text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
               selectedTimeframe === tf
-                ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
-                : "bg-white/[0.03] text-gray-400 hover:text-white hover:bg-white/[0.08] border border-white/5"
+                ? "bg-[#ea580c] text-white font-semibold shadow-xs"
+                : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
             }`}
           >
-            {tf === "Custom" && <Calendar className="w-3 h-3" />}
+            {tf === "Custom" && <Calendar className="w-3.5 h-3.5" />}
             {tf}
           </button>
         ))}
       </div>
 
-      {/* 4 Clean Metric Cards (Benchmarked from RapidSales) */}
+      {/* 4 Clean White KPI Cards with Left Color Accent Stripes */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1: CREDITS */}
-        <div className="p-5 rounded-2xl bg-[#070e12] border border-white/10 hover:border-emerald-500/30 transition-all space-y-1 relative overflow-hidden group">
-          <div className="flex items-center justify-between text-xs text-gray-400">
-            <span className="font-semibold uppercase tracking-wider text-[10px]">Credits</span>
-            <div className="w-7 h-7 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-              <span className="font-bold text-xs">₹</span>
+        <div className="p-5 rounded-xl bg-white border border-gray-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow relative border-l-4 border-l-purple-500">
+          <div className="flex items-center justify-between">
+            <div className="w-8 h-8 rounded-lg bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600">
+              <span className="font-bold text-sm">₹</span>
             </div>
           </div>
-          <div className="text-2xl font-bold text-white font-mono mt-1">₹82,559.76</div>
-          <p className="text-[11px] text-gray-400">Wallet balance available</p>
-          <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-purple-500/5 rounded-full blur-xl group-hover:bg-purple-500/10 transition-colors" />
+          <div className="mt-3">
+            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">Credits</span>
+            <div className="text-2xl font-bold text-gray-900 font-sans tracking-tight mt-0.5">₹82,559.76</div>
+            <p className="text-xs text-gray-400 mt-1 font-normal">Wallet balance</p>
+          </div>
         </div>
 
         {/* Card 2: TOTAL COST */}
-        <div className="p-5 rounded-2xl bg-[#070e12] border border-white/10 hover:border-emerald-500/30 transition-all space-y-1 relative overflow-hidden group">
-          <div className="flex items-center justify-between text-xs text-gray-400">
-            <span className="font-semibold uppercase tracking-wider text-[10px]">Total Cost</span>
-            <div className="w-7 h-7 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
-              <TrendingUp className="w-3.5 h-3.5" />
+        <div className="p-5 rounded-xl bg-white border border-gray-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow relative border-l-4 border-l-rose-500">
+          <div className="flex items-center justify-between">
+            <div className="w-8 h-8 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-500">
+              <TrendingUp className="w-4 h-4 stroke-[2.5]" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white font-mono mt-1">₹5,416.73</div>
-          <p className="text-[11px] text-emerald-400 font-medium">32.4x Attributed ROAS</p>
-          <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-rose-500/5 rounded-full blur-xl group-hover:bg-rose-500/10 transition-colors" />
+          <div className="mt-3">
+            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">Total Cost</span>
+            <div className="text-2xl font-bold text-gray-900 font-sans tracking-tight mt-0.5">₹5,416.73</div>
+          </div>
         </div>
 
         {/* Card 3: TOTAL CONTACTS */}
-        <div className="p-5 rounded-2xl bg-[#070e12] border border-white/10 hover:border-emerald-500/30 transition-all space-y-1 relative overflow-hidden group">
-          <div className="flex items-center justify-between text-xs text-gray-400">
-            <span className="font-semibold uppercase tracking-wider text-[10px]">Total Contacts</span>
-            <div className="w-7 h-7 rounded-lg bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400">
-              <Users className="w-3.5 h-3.5" />
+        <div className="p-5 rounded-xl bg-white border border-gray-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow relative border-l-4 border-l-teal-500">
+          <div className="flex items-center justify-between">
+            <div className="w-8 h-8 rounded-lg bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600">
+              <Users className="w-4 h-4 stroke-[2.5]" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white font-mono mt-1">48,291</div>
-          <p className="text-[11px] text-teal-400">Live Shopify Customer Graph</p>
-          <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-teal-500/5 rounded-full blur-xl group-hover:bg-teal-500/10 transition-colors" />
+          <div className="mt-3">
+            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">Total Contacts</span>
+            <div className="text-2xl font-bold text-gray-900 font-sans tracking-tight mt-0.5">283</div>
+          </div>
         </div>
 
         {/* Card 4: REPLY RATE */}
-        <div className="p-5 rounded-2xl bg-[#070e12] border border-white/10 hover:border-emerald-500/30 transition-all space-y-1 relative overflow-hidden group">
-          <div className="flex items-center justify-between text-xs text-gray-400">
-            <span className="font-semibold uppercase tracking-wider text-[10px]">Reply Rate</span>
-            <div className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
-              <CornerUpLeft className="w-3.5 h-3.5" />
+        <div className="p-5 rounded-xl bg-white border border-gray-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow relative border-l-4 border-l-indigo-500">
+          <div className="flex items-center justify-between">
+            <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+              <CornerUpLeft className="w-4 h-4 stroke-[2.5]" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-emerald-400 font-mono mt-1">18.4%</div>
-          <p className="text-[11px] text-gray-400">1,248 of 6,782 responded</p>
-          <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-cyan-500/5 rounded-full blur-xl group-hover:bg-cyan-500/10 transition-colors" />
+          <div className="mt-3">
+            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">Reply Rate</span>
+            <div className="text-2xl font-bold text-gray-900 font-sans tracking-tight mt-0.5">0.9%</div>
+            <p className="text-xs text-gray-400 mt-1 font-normal">191 of 21,208</p>
+          </div>
         </div>
       </div>
 
-      {/* Daily Spend Multi-Channel Chart Card */}
-      <div className="p-6 rounded-3xl bg-[#070e12] border border-white/10 shadow-xl space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
-          <div>
-            <span className="text-xs text-gray-400 uppercase font-semibold tracking-wider">Daily Spend</span>
-            <div className="text-2xl sm:text-3xl font-bold text-white font-mono mt-0.5">₹5,416.73</div>
-            <p className="text-[11px] text-gray-400 mt-1">
-              Auto-reply is part of WhatsApp cost — shown as a dashed overlay, not added to the total.
-            </p>
+      {/* Daily Spend Multi-Channel Spline Chart Card (Exact RapidSales Match) */}
+      <div className="p-6 rounded-xl bg-white border border-gray-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.04)] space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <BarChart2 className="w-4 h-4 text-gray-500" />
+            <h3 className="text-base font-bold text-gray-900">Daily Spend</h3>
           </div>
+          <div className="text-xl font-bold text-gray-900 font-sans">₹5,416.73</div>
+        </div>
 
-          {/* Channel Legend with Filter Toggles */}
-          <div className="flex flex-wrap items-center gap-3 text-xs">
-            <button
-              onClick={() => setActiveChannel("all")}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-colors ${
-                activeChannel === "all" ? "bg-white/10 text-white font-bold" : "text-gray-400 hover:text-white"
-              }`}
-            >
-              All Channels
-            </button>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs border-b border-gray-100 pb-3">
+          <p className="text-xs text-gray-400">
+            Auto-reply is part of WhatsApp cost — shown as a dashed overlay, not added to the total.
+          </p>
 
-            <button
-              onClick={() => setActiveChannel("whatsapp")}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-colors ${
-                activeChannel === "whatsapp" ? "bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30" : "text-gray-400 hover:text-white"
-              }`}
-            >
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-              WhatsApp (₹3,820)
-            </button>
-
-            <button
-              onClick={() => setActiveChannel("email")}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-colors ${
-                activeChannel === "email" ? "bg-blue-500/20 text-blue-300 font-bold border border-blue-500/30" : "text-gray-400 hover:text-white"
-              }`}
-            >
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-400" />
-              Email (₹412)
-            </button>
-
-            <button
-              onClick={() => setActiveChannel("call")}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-colors ${
-                activeChannel === "call" ? "bg-rose-500/20 text-rose-300 font-bold border border-rose-500/30" : "text-gray-400 hover:text-white"
-              }`}
-            >
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
-              Call (₹1,184)
-            </button>
-
-            <button
-              onClick={() => setActiveChannel("autoreply")}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-colors ${
-                activeChannel === "autoreply" ? "bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30" : "text-gray-400 hover:text-white"
-              }`}
-            >
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400 border border-dashed border-amber-300" />
-              Auto-reply (₹218)
-            </button>
+          {/* Legend Items (RapidSales screenshot matching) */}
+          <div className="flex items-center gap-4 text-xs shrink-0">
+            <span className="flex items-center gap-1.5 text-gray-600">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]" /> WhatsApp
+            </span>
+            <span className="flex items-center gap-1.5 text-gray-600">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#3b82f6]" /> Email
+            </span>
+            <span className="flex items-center gap-1.5 text-gray-600">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#ea580c]" /> Call
+            </span>
+            <span className="flex items-center gap-1.5 text-gray-600">
+              <span className="w-3 border-t-2 border-dashed border-[#eab308]" /> Auto-reply
+            </span>
           </div>
         </div>
 
-        {/* SVG Bezier Area Curve Chart */}
-        <div className="relative h-64 w-full">
-          {/* Y Axis Grid Lines */}
-          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none text-[10px] font-mono text-gray-500">
-            <div className="border-b border-white/5 pb-1 flex justify-between"><span>₹250</span></div>
-            <div className="border-b border-white/5 pb-1 flex justify-between"><span>₹200</span></div>
-            <div className="border-b border-white/5 pb-1 flex justify-between"><span>₹150</span></div>
-            <div className="border-b border-white/5 pb-1 flex justify-between"><span>₹100</span></div>
-            <div className="flex justify-between"><span>₹0</span></div>
-          </div>
-
-          {/* SVG Curves */}
-          <svg className="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 800 240">
+        {/* Clean SVG Spline Area Chart with Y-Axis */}
+        <div className="relative h-64 w-full pt-4">
+          <svg className="w-full h-full overflow-visible" viewBox="0 0 1000 220" preserveAspectRatio="none">
             <defs>
-              <linearGradient id="emeraldGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
-              </linearGradient>
-              <linearGradient id="roseGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#f43f5e" stopOpacity="0.0" />
+              <linearGradient id="spendGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#ea580c" stopOpacity="0.22" />
+                <stop offset="100%" stopColor="#ea580c" stopOpacity="0.00" />
               </linearGradient>
             </defs>
 
-            {/* Area Fill for Primary Channel */}
-            {(activeChannel === "all" || activeChannel === "whatsapp") && (
-              <>
-                <path
-                  d="M 0,220 C 50,140 100,50 150,60 C 200,70 250,180 300,160 C 350,140 400,230 450,210 C 500,190 550,70 600,80 C 650,90 700,210 750,190 L 800,140 L 800,240 L 0,240 Z"
-                  fill="url(#emeraldGrad)"
-                />
-                <path
-                  d="M 0,220 C 50,140 100,50 150,60 C 200,70 250,180 300,160 C 350,140 400,230 450,210 C 500,190 550,70 600,80 C 650,90 700,210 750,190 L 800,140"
-                  fill="none"
-                  stroke="#10b981"
-                  strokeWidth="2.5"
-                />
-              </>
-            )}
+            {/* Horizontal Grid lines matching RapidSales */}
+            <g className="text-[10px] fill-gray-400 font-mono">
+              <line x1="40" y1="10" x2="1000" y2="10" stroke="#f1f5f9" strokeWidth="1" />
+              <text x="5" y="14">₹250</text>
 
-            {/* AI Call Curve */}
-            {(activeChannel === "all" || activeChannel === "call") && (
-              <path
-                d="M 0,235 C 50,200 100,180 150,140 C 200,100 250,220 300,210 C 350,200 400,120 450,150 C 500,180 550,130 600,120 C 650,110 700,180 750,160 L 800,150"
-                fill="none"
-                stroke="#f43f5e"
-                strokeWidth="2"
-              />
-            )}
+              <line x1="40" y1="50" x2="1000" y2="50" stroke="#f1f5f9" strokeWidth="1" />
+              <text x="5" y="54">₹200</text>
 
-            {/* Email Curve */}
-            {(activeChannel === "all" || activeChannel === "email") && (
-              <path
-                d="M 0,238 C 50,230 100,220 150,210 C 200,200 250,215 300,205 C 350,195 400,200 450,190 C 500,180 550,195 600,185 C 650,175 700,190 750,180 L 800,175"
-                fill="none"
-                stroke="#60a5fa"
-                strokeWidth="2"
-              />
-            )}
+              <line x1="40" y1="90" x2="1000" y2="90" stroke="#f1f5f9" strokeWidth="1" />
+              <text x="5" y="94">₹150</text>
 
-            {/* Auto-reply dashed overlay */}
-            {(activeChannel === "all" || activeChannel === "autoreply") && (
-              <path
-                d="M 0,230 C 50,160 100,90 150,100 C 200,110 250,200 300,180 C 350,160 400,235 450,220 C 500,205 550,100 600,110 C 650,120 700,220 750,205 L 800,160"
-                fill="none"
-                stroke="#fbbf24"
-                strokeWidth="1.75"
-                strokeDasharray="5,5"
-              />
-            )}
+              <line x1="40" y1="130" x2="1000" y2="130" stroke="#f1f5f9" strokeWidth="1" />
+              <text x="5" y="134">₹100</text>
+
+              <line x1="40" y1="170" x2="1000" y2="170" stroke="#f1f5f9" strokeWidth="1" />
+              <text x="5" y="174">₹50</text>
+
+              <line x1="40" y1="210" x2="1000" y2="210" stroke="#e2e8f0" strokeWidth="1" />
+              <text x="5" y="214">₹0</text>
+            </g>
+
+            {/* Main Spend Curve Area Fill */}
+            <path
+              d="M 50 210
+                 C 90 200, 110 20, 150 20
+                 C 180 20, 200 170, 230 170
+                 C 250 170, 270 80, 300 80
+                 C 330 80, 360 210, 400 210
+                 C 450 210, 520 70, 600 70
+                 C 660 70, 680 180, 710 180
+                 C 740 180, 760 90, 800 90
+                 C 830 90, 870 210, 920 210
+                 C 960 210, 980 210, 1000 210
+                 L 1000 210 L 50 210 Z"
+              fill="url(#spendGradient)"
+            />
+
+            {/* Main Spend Curve Line (Orange/Amber in screenshot) */}
+            <path
+              d="M 50 210
+                 C 90 200, 110 20, 150 20
+                 C 180 20, 200 170, 230 170
+                 C 250 170, 270 80, 300 80
+                 C 330 80, 360 210, 400 210
+                 C 450 210, 520 70, 600 70
+                 C 660 70, 680 180, 710 180
+                 C 740 180, 760 90, 800 90
+                 C 830 90, 870 210, 920 210
+                 C 960 210, 980 210, 1000 210"
+              fill="none"
+              stroke="#ea580c"
+              strokeWidth="2"
+            />
+
+            {/* Auto-Reply Dashed Overlay Line (Yellow/Gold) */}
+            <path
+              d="M 50 210
+                 C 90 208, 110 175, 150 175
+                 C 180 175, 200 200, 230 200
+                 C 250 200, 270 185, 300 185
+                 C 330 185, 360 210, 400 210
+                 C 450 210, 520 180, 600 180
+                 C 660 180, 680 205, 710 205
+                 C 740 205, 760 188, 800 188
+                 C 830 188, 870 210, 920 210
+                 L 1000 210"
+              fill="none"
+              stroke="#eab308"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+            />
           </svg>
-        </div>
-
-        {/* X Axis Time Labels */}
-        <div className="flex justify-between text-[10px] font-mono text-gray-500 pt-2 border-t border-white/5">
-          <span>01 Sep</span>
-          <span>05 Sep</span>
-          <span>10 Sep</span>
-          <span>15 Sep</span>
-          <span>20 Sep (Today)</span>
         </div>
       </div>
     </div>

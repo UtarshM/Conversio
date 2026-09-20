@@ -4,88 +4,61 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { useAppContext } from "@/context/AppContext";
 import {
   Wallet,
-  Search,
   Bell,
-  Sparkles,
   Plus,
   Cpu,
-  CheckCircle2,
+  ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SetupGuideModal } from "@/components/SetupGuideModal";
-import { CommandPaletteModal } from "@/components/CommandPaletteModal";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { user, walletBalance, whatsApp } = useAppContext();
-  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const { user, walletBalance } = useAppContext();
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-[#04080a] text-white font-sans selection:bg-emerald-500 selection:text-black">
+      <div className="min-h-screen flex w-full bg-[#f8fafc] text-gray-900 font-sans selection:bg-orange-500 selection:text-white">
         <AppSidebar />
-        <div className="flex-1 flex flex-col min-w-0 bg-[#04080a] relative">
-          {/* TOP DASHBOARD HEADER (Benchmarked from RapidSales) */}
-          <header className="h-16 flex items-center justify-between border-b border-white/10 px-4 sm:px-6 bg-[#070e12] shadow-sm backdrop-blur-xl gap-4">
-            {/* Left: Sidebar toggle & Store Status */}
-            <div className="flex items-center gap-3 min-w-0">
-              <SidebarTrigger className="mr-1 text-gray-400 hover:text-emerald-400 shrink-0" />
-              <div className="hidden md:block">
-                <p className="text-sm font-bold text-white font-display flex items-center gap-2 truncate">
-                  {user ? `${user.name} • Workspace` : "The Bombay Botanics • Founder OS"}
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                </p>
-                <p className="text-[11px] text-gray-400 font-mono truncate">
-                  Shopify Store Live Sync Active
-                </p>
-              </div>
-            </div>
-
-            {/* Center: Search input button (Ctrl K) */}
-            <div className="flex-1 max-w-xs lg:max-w-sm">
-              <button
-                type="button"
-                onClick={() => setCommandPaletteOpen(true)}
-                className="w-full h-9 px-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 text-xs text-gray-400 hover:text-gray-200 flex items-center justify-between transition-colors cursor-pointer"
-              >
-                <span className="flex items-center gap-2 truncate">
-                  <Search className="w-3.5 h-3.5 text-gray-400" />
-                  <span className="truncate">Find a page, deal, contact...</span>
-                </span>
-                <kbd className="hidden sm:inline font-mono text-[10px] px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-gray-400">
-                  Ctrl K
-                </kbd>
-              </button>
+        <div className="flex-1 flex flex-col min-w-0 bg-[#f8fafc] relative">
+          {/* TOP DASHBOARD HEADER (Exact RapidSales Match) */}
+          <header className="h-14 flex items-center justify-between border-b border-gray-200/80 px-4 sm:px-6 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] gap-4">
+            {/* Left: Sidebar toggle */}
+            <div className="flex items-center gap-2">
+              <SidebarTrigger className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg p-1.5 transition-colors" />
             </div>
 
             {/* Right: Credits, AI Usage, Notifications & Profile */}
             <div className="flex items-center gap-2.5 shrink-0">
               {/* Credits Pill (RapidSales benchmark) */}
-              <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold shadow-inner">
-                <span className="text-[10px] uppercase tracking-wider text-emerald-400/80">Credits</span>
-                <span className="text-white">₹{walletBalance.toLocaleString()}</span>
-                <button
-                  onClick={() => window.location.href = "/wallet"}
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-50/80 border border-emerald-200/80 text-emerald-800 text-xs font-semibold shadow-xs">
+                <span className="text-[10px] uppercase tracking-wider text-emerald-600 font-bold">Credits</span>
+                <span className="font-mono font-bold text-gray-900">
+                  {walletBalance ? Number(walletBalance).toFixed(1) : "82,557.7"}
+                </span>
+                <Link
+                  to="/wallet"
                   title="Top Up Credits"
-                  className="w-4 h-4 rounded-full bg-emerald-500 text-black flex items-center justify-center hover:scale-110 transition-transform ml-0.5"
+                  className="w-4 h-4 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center transition-transform hover:scale-105 ml-0.5"
                 >
                   <Plus className="w-3 h-3 stroke-[3]" />
-                </button>
+                </Link>
               </div>
 
               {/* AI Usage Limits Pill */}
               <Link
                 to="/settings"
-                className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono font-medium hover:bg-purple-500/20 transition-colors"
+                className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-50/80 border border-purple-200/80 text-purple-700 text-xs font-medium hover:bg-purple-100 transition-colors"
               >
-                <Cpu className="w-3.5 h-3.5 text-purple-400" />
-                <span>AI Limits</span>
+                <Cpu className="w-3.5 h-3.5 text-purple-600" />
+                <span className="text-[10px] uppercase font-bold text-purple-500">AI Usage</span>
+                <span className="font-semibold text-purple-900">Limits</span>
               </Link>
 
               {/* Notifications Bell */}
               <div className="relative">
                 <button
                   type="button"
-                  className="w-9 h-9 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 text-gray-300 flex items-center justify-center transition-colors relative"
+                  className="w-8 h-8 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200/80 text-gray-600 flex items-center justify-center transition-colors relative"
                 >
                   <Bell className="w-4 h-4" />
                   <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-[9px] font-bold text-white flex items-center justify-center font-mono">
@@ -94,31 +67,26 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 </button>
               </div>
 
-              {/* User Avatar */}
-              <div className="flex items-center gap-2 pl-1 border-l border-white/10">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-black font-bold text-xs flex items-center justify-center shadow-md">
-                  {user?.name ? user.name[0].toUpperCase() : "U"}
+              {/* User Avatar & Name */}
+              <div className="flex items-center gap-2 pl-1 border-l border-gray-200 cursor-pointer">
+                <div className="w-7 h-7 rounded-lg bg-[#b91c1c] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                  #
                 </div>
-                <span className="hidden xl:inline text-xs font-semibold text-gray-200">
-                  {user?.name || "Utkarsh Makwana"}
+                <span className="hidden md:inline text-xs font-semibold text-gray-800">
+                  {user?.name || "Harvey Specter"}
                 </span>
+                <ChevronDown className="w-3 h-3 text-gray-400 hidden md:inline" />
               </div>
             </div>
           </header>
 
           {/* Main Workspace Area */}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto bg-[#04080a]">
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto bg-[#f8fafc]">
             {children}
           </main>
 
           {/* Floating Setup Guide Playbook Button & Drawer */}
           <SetupGuideModal />
-
-          {/* Global Command Palette */}
-          <CommandPaletteModal
-            isOpen={commandPaletteOpen}
-            onClose={() => setCommandPaletteOpen(false)}
-          />
         </div>
       </div>
     </SidebarProvider>

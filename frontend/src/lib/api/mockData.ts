@@ -1,10 +1,14 @@
 import type { AppState, Contact } from "@/lib/api/types";
 
 export const defaultAppState: AppState = {
-  user: null,
-  onboardingComplete: false,
-  walletBalance: 4250,
-  totalSpent: 12780,
+  user: {
+    name: "Harvey Specter",
+    email: "support@hashtechy.com",
+    role: "ADMIN",
+  },
+  onboardingComplete: true,
+  walletBalance: 82557.7,
+  totalSpent: 5416.73,
   messagesSent: 25560,
   contacts: [
     { id: "c1", name: "Rahul Sharma", phone: "+91 98765 43210", tags: ["VIP", "Shopify"] },

@@ -159,7 +159,7 @@ export default function HomePage() {
             {/* High-Resolution Dashboard Mockup Image Showcase */}
             <div className="pt-4 relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-inner">
               <img
-                src="/home/dashboard_mockup.png"
+                src="/home/conversio_hero_dashboard.jpg"
                 alt="Conversio Outreach Analytics & Daily Spend Dashboard"
                 className="w-full h-auto object-cover rounded-xl shadow-2xl transition-transform duration-700 group-hover:scale-[1.01]"
               />
@@ -432,7 +432,7 @@ export default function HomePage() {
               </div>
               <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white/5">
                 <img
-                  src="/home/campaign_delivery_mockup.png"
+                  src="/home/campaign_delivery_graphic.jpg"
                   alt="Campaign Delivery Settings with Anti-Ban Human Jitter"
                   className="w-full h-auto object-cover rounded-xl hover:scale-[1.02] transition-transform duration-500"
                 />

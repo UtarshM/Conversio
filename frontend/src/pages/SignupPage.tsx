@@ -93,7 +93,7 @@ export default function SignupPage() {
             {/* Product Mockup Showcase Card */}
             <div className="relative rounded-3xl overflow-hidden border border-emerald-500/20 shadow-2xl bg-black/40 group">
               <img
-                src="/home/dashboard_mockup.png"
+                src="/home/conversio_hero_dashboard.jpg"
                 alt="Conversio Outreach Analytics & Campaign Engine"
                 className="w-full h-48 sm:h-56 object-cover transition-transform duration-700 group-hover:scale-105"
               />

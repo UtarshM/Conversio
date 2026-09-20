@@ -31,20 +31,20 @@ export function PublicNavbar() {
         <div className="w-full max-w-[1240px] pointer-events-auto relative">
           <div className="bg-slate-950/85 backdrop-blur-2xl h-[60px] sm:h-[66px] shadow-[0_15px_40px_-10px_rgba(0,0,0,0.8)] border border-white/10 rounded-full flex items-center justify-between px-4 sm:px-7 transition-all duration-300">
             {/* Brand Logo */}
-            <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group">
-              <div className="relative">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0">
+              <div className="relative shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-xl overflow-hidden border border-emerald-500/30 bg-slate-900 shadow-md group-hover:scale-105 transition-transform flex items-center justify-center">
                 <img
-                  src="/home/logo.jpg"
+                  src="/home/logo-icon.png"
                   alt="Conversio AI"
-                  className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-cover border border-white/20 shadow-md group-hover:scale-105 transition-transform"
+                  className="w-full h-full object-cover"
                 />
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse" />
+                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse" />
               </div>
-              <div className="flex flex-col text-left">
-                <span className="font-display text-lg sm:text-xl font-extrabold tracking-tight text-white group-hover:text-emerald-400 transition-colors leading-none">
+              <div className="flex flex-col text-left truncate">
+                <span className="font-display text-base sm:text-xl font-extrabold tracking-tight text-white group-hover:text-emerald-400 transition-colors leading-none truncate">
                   Conversio
                 </span>
-                <span className="text-[8px] sm:text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase mt-0.5">
+                <span className="text-[7.5px] sm:text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase mt-0.5 whitespace-nowrap">
                   RETENTION &amp; SALES AI
                 </span>
               </div>
@@ -223,17 +223,17 @@ export function PublicNavbar() {
             </nav>
 
             {/* Primary Action Button — GLOWING "BOOK A DEMO" */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
               <Button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   setCalendarModalOpen(true);
                 }}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs h-9 sm:h-10 px-4 sm:px-6 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:shadow-[0_0_28px_rgba(16,185,129,0.55)] flex items-center gap-2 transition-all transform active:scale-95 cursor-pointer border border-emerald-400/30"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] sm:text-xs h-8 sm:h-10 px-3 sm:px-6 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:shadow-[0_0_28px_rgba(16,185,129,0.55)] flex items-center gap-1.5 sm:gap-2 transition-all transform active:scale-95 cursor-pointer border border-emerald-400/30 shrink-0"
               >
-                <Calendar className="w-3.5 h-3.5 text-white" />
-                <span>Book a Demo</span>
-                <ArrowRight className="w-3.5 h-3.5 text-emerald-200" />
+                <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white shrink-0" />
+                <span className="whitespace-nowrap">Book a Demo</span>
+                <ArrowRight className="hidden sm:inline w-3.5 h-3.5 text-emerald-200" />
               </Button>
 
               {/* Mobile Hamburger Menu Toggle */}
@@ -242,7 +242,7 @@ export function PublicNavbar() {
                 variant="ghost"
                 size="icon"
                 aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-                className="lg:hidden rounded-full text-white hover:bg-white/10 h-9 w-9"
+                className="lg:hidden rounded-full text-white hover:bg-white/10 h-8 w-8 sm:h-9 sm:w-9 shrink-0 flex items-center justify-center"
                 onClick={() => setMobileMenuOpen((open) => !open)}
               >
                 {mobileMenuOpen ? <X className="h-5 w-5 text-white" /> : <Menu className="h-5 w-5 text-white" />}

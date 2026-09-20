@@ -19,7 +19,9 @@ export function PublicFooter() {
             {/* Brand Logo & Tagline */}
             <div className="space-y-3">
               <Link to="/" className="flex items-center gap-2.5">
-                <img src="/home/logo.jpg" alt="Conversio AI" className="h-10 w-10 rounded-xl object-cover border border-slate-700 shadow-md" />
+                <div className="h-10 w-10 rounded-xl overflow-hidden border border-emerald-500/30 bg-slate-900 shadow-md flex items-center justify-center shrink-0">
+                  <img src="/home/logo-icon.png" alt="Conversio AI" className="w-full h-full object-cover" />
+                </div>
                 <span className="font-display text-2xl font-bold tracking-tight text-white">Conversio</span>
               </Link>
               <p className="text-slate-400 text-xs leading-relaxed max-w-sm">

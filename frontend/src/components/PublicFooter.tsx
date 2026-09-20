@@ -100,7 +100,6 @@ export function PublicFooter() {
                 <li><Link to="/tri-channel-sales" className="hover:text-blue-400 transition-colors">Conversio Outbound Sales</Link></li>
                 <li><Link to="/pricing" className="hover:text-white transition-colors">Transparent Pricing</Link></li>
                 <li><Link to="/book-demo" className="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">Book a Demo (Connect Calendar)</Link></li>
-                <li><Link to="/partner" className="hover:text-white transition-colors">Affiliate Program (20% Recurring)</Link></li>
               </ul>
             </div>
 
@@ -136,7 +135,6 @@ export function PublicFooter() {
                 <li><Link to="/playground" className="hover:text-white transition-colors">Support Chatbot</Link></li>
                 <li><Link to="/omnichannel" className="hover:text-white transition-colors">OmniChannel CRM</Link></li>
                 <li><Link to="/playground" className="hover:text-white transition-colors">Support Analytics</Link></li>
-                <li><Link to="/partner" className="hover:text-white transition-colors">Retail Channel Partner Support</Link></li>
               </ul>
             </div>
 

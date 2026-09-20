@@ -81,8 +81,8 @@ const App = () => (
             <Route path="/omnichannel" element={<OmnichannelPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/blog" element={<BlogPage />} />
-            <Route path="/login" element={<Navigate to="/" replace />} />
-            <Route path="/signup" element={<Navigate to="/" replace />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/partner" element={<Navigate to="/" replace />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/onboarding" element={<OnboardingPage />} />

@@ -5,6 +5,7 @@ import { sendMetaReplyWithServer } from "@/lib/meta/server";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { MessageSquare, Phone, UserRound, Workflow } from "lucide-react";
+import { OmnichannelInboxWidget } from "@/components/home/OmnichannelInboxWidget";
 
 export default function InboxPage() {
   const {
@@ -18,6 +19,7 @@ export default function InboxPage() {
     user,
     whatsApp,
   } = useAppContext();
+  const [inboxMode, setInboxMode] = useState<"omnichannel" | "meta">("omnichannel");
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(conversations[0]?.id ?? null);
   const [statusFilter, setStatusFilter] = useState<"All" | "Open" | "Pending" | "Resolved">("All");
   const [ownerFilter, setOwnerFilter] = useState<"All" | "Mine" | "Unassigned">("All");
@@ -166,8 +168,39 @@ export default function InboxPage() {
 
   return (
     <DashboardLayout>
-      <div className="mx-auto max-w-7xl space-y-8">
-        <div className="rounded-[2rem] border border-border bg-card shadow-card overflow-hidden">
+      <div className="mx-auto max-w-7xl space-y-8 text-left">
+        {/* TOP TAB SWITCHER */}
+        <div className="flex items-center gap-2 p-2 rounded-2xl bg-[#070e12] border border-white/10 shadow-lg overflow-x-auto">
+          <button
+            onClick={() => setInboxMode("omnichannel")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+              inboxMode === "omnichannel"
+                ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+            }`}
+          >
+            <MessageSquare className="w-3.5 h-3.5" />
+            Unified Omnichannel AI Inbox (WhatsApp, Email, Voice)
+          </button>
+
+          <button
+            onClick={() => setInboxMode("meta")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+              inboxMode === "meta"
+                ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+            }`}
+          >
+            <Workflow className="w-3.5 h-3.5" />
+            Live Meta Cloud API Operator Desk ({conversations.length})
+          </button>
+        </div>
+
+        {inboxMode === "omnichannel" && <OmnichannelInboxWidget />}
+
+        {inboxMode === "meta" && (
+          <div className="space-y-8">
+            <div className="rounded-[2rem] border border-border bg-card shadow-card overflow-hidden">
           <div className="relative px-8 py-8">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,hsl(205_78%_52%/0.10),transparent_35%),radial-gradient(circle_at_bottom_right,hsl(152_58%_38%/0.10),transparent_40%)]" />
             <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
@@ -464,6 +497,8 @@ export default function InboxPage() {
             </div>
           </section>
         </div>
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );

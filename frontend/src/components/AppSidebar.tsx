@@ -50,20 +50,20 @@ export function AppSidebar() {
   const role = user?.role || "USER";
 
   const mainItems = [
-    { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, roles: ["ADMIN", "PARTNER", "USER"] },
-    { title: "Connect WhatsApp", url: "/connect", icon: Link2, roles: ["USER", "ADMIN"] },
-    { title: "Blue Tick", url: "/green-tick", icon: BadgeCheck, roles: ["USER", "ADMIN"] },
-    { title: "Ecommerce Recovery", url: "/ecommerce-recovery", icon: ShoppingBag, roles: ["USER", "ADMIN"] },
-    { title: "Campaigns", url: "/campaigns", icon: MessageSquare, roles: ["USER", "ADMIN"] },
-    { title: "Inbox", url: "/inbox", icon: Inbox, roles: ["USER", "ADMIN"] },
-    { title: "Leads", url: "/leads", icon: Megaphone, roles: ["USER", "ADMIN"] },
-    { title: "Automations", url: "/automations", icon: Bot, roles: ["USER", "ADMIN"] },
-    { title: "Analytics", url: "/analytics", icon: BarChart3, roles: ["USER", "ADMIN", "PARTNER"] },
-    { title: "Reliability", url: "/reliability", icon: ShieldAlert, roles: ["USER", "ADMIN"] },
-    { title: "Templates", url: "/templates", icon: FileText, roles: ["USER", "ADMIN"] },
-    { title: "Contacts", url: "/contacts", icon: Users, roles: ["USER", "ADMIN"] },
-    { title: "Wallet", url: "/wallet", icon: Wallet, roles: ["USER", "ADMIN"] },
+    { title: "Command Center", url: "/dashboard", icon: LayoutDashboard, roles: ["ADMIN", "PARTNER", "USER"] },
+    { title: "Customer 360", url: "/contacts", icon: Users, roles: ["USER", "ADMIN"] },
+    { title: "Sales CRM Pipeline", url: "/leads", icon: Megaphone, roles: ["USER", "ADMIN"] },
+    { title: "Omnichannel Inbox", url: "/inbox", icon: Inbox, roles: ["USER", "ADMIN"] },
+    { title: "AI Opportunities", url: "/ecommerce-recovery", icon: Sparkles, roles: ["USER", "ADMIN"] },
+    { title: "Automations & Journeys", url: "/automations", icon: Bot, roles: ["USER", "ADMIN"] },
+    { title: "Campaigns & Sequences", url: "/campaigns", icon: MessageSquare, roles: ["USER", "ADMIN"] },
+    { title: "Revenue Attribution", url: "/analytics", icon: BarChart3, roles: ["USER", "ADMIN", "PARTNER"] },
+    { title: "Connect Channels", url: "/connect", icon: Link2, roles: ["USER", "ADMIN"] },
+    { title: "Meta Blue Tick", url: "/green-tick", icon: BadgeCheck, roles: ["USER", "ADMIN"] },
+    { title: "Message Templates", url: "/templates", icon: FileText, roles: ["USER", "ADMIN"] },
+    { title: "Wallet & Billing", url: "/wallet", icon: Wallet, roles: ["USER", "ADMIN"] },
     { title: "Transactions", url: "/transactions", icon: Receipt, roles: ["USER", "ADMIN", "PARTNER"] },
+    { title: "Reliability & Uptime", url: "/reliability", icon: ShieldAlert, roles: ["USER", "ADMIN"] },
   ];
 
   const cloudItems = [
@@ -104,7 +104,7 @@ export function AppSidebar() {
               <h1 className="font-display text-lg font-bold text-foreground leading-tight">
                 {branding?.brandName || "Conversio"}
               </h1>
-              <p className="text-xs text-muted-foreground">{branding?.brandName ? "White Label" : "WhatsApp Business"}</p>
+              <p className="text-xs text-muted-foreground">{branding?.brandName ? "White Label" : "AI Revenue OS"}</p>
             </div>
           )}
         </div>
@@ -113,7 +113,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Main
+            Platform Modules
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>

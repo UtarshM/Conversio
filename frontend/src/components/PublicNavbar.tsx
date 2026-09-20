@@ -222,8 +222,15 @@ export function PublicNavbar() {
               </Link>
             </nav>
 
-            {/* Primary Action Button — GLOWING "BOOK A DEMO" */}
+            {/* Primary Action Buttons */}
             <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+              <Link
+                to="/login"
+                className="hidden sm:inline-flex items-center text-xs font-semibold text-gray-300 hover:text-emerald-400 px-3 py-1.5 transition-colors"
+              >
+                Sign In
+              </Link>
+
               <Button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -292,7 +299,15 @@ export function PublicNavbar() {
                 Interactive Playground
               </Link>
 
-              <div className="pt-3 border-t border-white/10">
+              <div className="pt-3 border-t border-white/10 space-y-2">
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-center rounded-2xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm font-semibold text-white hover:bg-white/[0.08] transition-colors"
+                >
+                  Sign In to Workspace
+                </Link>
+
                 <Button
                   onClick={() => {
                     setMobileMenuOpen(false);

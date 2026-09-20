@@ -7,6 +7,10 @@ import { useAppContext } from "@/context/AppContext";
 import { toast } from "@/components/ui/use-toast";
 import type { Contact } from "@/lib/api";
 
+import { Customer360Widget } from "@/components/home/Customer360Widget";
+import { IdentityResolutionWidget } from "@/components/home/IdentityResolutionWidget";
+import { Sparkles, Fingerprint, Layers } from "lucide-react";
+
 const tagColors: Record<string, string> = {
   VIP: "bg-primary/10 text-primary",
   Shopify: "bg-info/10 text-info",
@@ -19,6 +23,7 @@ const tagColors: Record<string, string> = {
 
 export default function ContactsPage() {
   const { contacts, addContact, uploadSampleContacts } = useAppContext();
+  const [activeViewTab, setActiveViewTab] = useState<"customer360" | "identity" | "directory">("customer360");
   const [search, setSearch] = useState("");
   const [activeTag, setActiveTag] = useState<string>("All");
   const [showForm, setShowForm] = useState(false);
@@ -131,12 +136,57 @@ export default function ContactsPage() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-6xl mx-auto space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="rounded-[2rem] border border-border bg-card shadow-card overflow-hidden"
-        >
+      <div className="max-w-7xl mx-auto space-y-8 text-left">
+        {/* TOP TAB SWITCHER */}
+        <div className="flex items-center gap-2 p-2 rounded-2xl bg-[#070e12] border border-white/10 shadow-lg overflow-x-auto">
+          <button
+            onClick={() => setActiveViewTab("customer360")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+              activeViewTab === "customer360"
+                ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+            }`}
+          >
+            <Users className="w-3.5 h-3.5" />
+            Customer 360 &amp; Unified Timeline
+          </button>
+
+          <button
+            onClick={() => setActiveViewTab("identity")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+              activeViewTab === "identity"
+                ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+            }`}
+          >
+            <Fingerprint className="w-3.5 h-3.5" />
+            Identity Resolution Graph
+          </button>
+
+          <button
+            onClick={() => setActiveViewTab("directory")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+              activeViewTab === "directory"
+                ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            Audience Directory &amp; Segments ({contacts.length})
+          </button>
+        </div>
+
+        {activeViewTab === "customer360" && <Customer360Widget />}
+
+        {activeViewTab === "identity" && <IdentityResolutionWidget />}
+
+        {activeViewTab === "directory" && (
+          <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="rounded-[2rem] border border-white/10 bg-[#070e12] shadow-card overflow-hidden"
+            >
           <div className="relative px-8 py-8">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,hsl(205_78%_52%/0.10),transparent_35%),radial-gradient(circle_at_bottom_right,hsl(152_58%_38%/0.10),transparent_40%)]" />
             <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -349,6 +399,8 @@ export default function ContactsPage() {
             </table>
           </div>
         </motion.div>
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );

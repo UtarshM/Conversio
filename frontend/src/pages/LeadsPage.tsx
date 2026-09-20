@@ -6,6 +6,7 @@ import { useAppContext } from "@/context/AppContext";
 import { BarChart3, Megaphone, Phone, Search, UserRound } from "lucide-react";
 import { fetchMetaSourceMappings, type MetaLeadSourceMapping } from "@/lib/meta/sourceMappings";
 import { matchLeadToMetaMapping } from "@/lib/meta/attribution";
+import { SalesCrmPipelineWidget } from "@/components/home/SalesCrmPipelineWidget";
 
 export default function LeadsPage() {
   const { leads, updateLead, user } = useAppContext();
@@ -131,6 +132,9 @@ export default function LeadsPage() {
             </div>
           </div>
         </div>
+
+        {/* HIGH-VELOCITY SALES CRM PIPELINE WIDGET */}
+        <SalesCrmPipelineWidget />
 
         <div className="grid gap-4 lg:grid-cols-[1.15fr,0.85fr]">
           <section className="rounded-[1.5rem] border border-border bg-card p-5 shadow-card">

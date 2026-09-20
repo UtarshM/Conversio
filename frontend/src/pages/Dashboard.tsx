@@ -1,331 +1,178 @@
+import { useState } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
-import { StatCard } from "@/components/StatCard";
+import { CommandCenterWidget } from "@/components/home/CommandCenterWidget";
+import { Customer360Widget } from "@/components/home/Customer360Widget";
+import { SalesCrmPipelineWidget } from "@/components/home/SalesCrmPipelineWidget";
+import { OmnichannelInboxWidget } from "@/components/home/OmnichannelInboxWidget";
+import { RtoIntelligenceWidget } from "@/components/home/RtoIntelligenceWidget";
 import {
-  AlertTriangle,
-  ArrowUpRight,
-  BarChart3,
-  CheckCircle2,
-  Clock3,
-  MessageSquare,
-  Send,
-  ShieldCheck,
-  Target,
+  LayoutDashboard,
   Users,
-  Wallet,
-  ShoppingCart,
+  Trello,
+  MessageSquare,
+  ShieldCheck,
+  ShoppingBag,
+  Sparkles,
+  Zap,
+  CheckCircle2,
+  TrendingUp,
+  ArrowRight,
+  ExternalLink,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { useAppContext } from "@/context/AppContext";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import {
-  getBusinessVerificationLabel,
-  getConnectionStatusLabel,
-  getObaStatusLabel,
-} from "@/lib/meta/status";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const {
-    walletBalance,
-    messagesSent,
-    totalContacts,
-    activeCampaigns,
-    campaigns,
-    recentActivity,
-    lowBalanceThreshold,
-    whatsApp,
-    templates,
-  } = useAppContext();
-
-  const approvedTemplates = templates.filter((template) => template.status === "Approved").length;
-  const deliveredCampaigns = campaigns.filter((campaign) => campaign.status === "Delivered").length;
-  const estimatedPipelineSpend = campaigns
-    .filter((campaign) => campaign.status === "Sending" || campaign.status === "Scheduled")
-    .reduce((sum, campaign) => sum + campaign.estimatedCost, 0);
-  const connectionSummary = getConnectionStatusLabel(whatsApp.connectionStatus);
-  const businessVerification = getBusinessVerificationLabel(whatsApp.businessVerificationStatus);
-  const obaSummary = getObaStatusLabel(whatsApp.obaStatus);
+  const [activeView, setActiveView] = useState<"command" | "customer360" | "pipeline" | "inbox" | "rto">("command");
 
   return (
     <DashboardLayout>
-      <div className="max-w-7xl mx-auto space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-md text-left"
-        >
-          <div className="relative px-8 py-8 lg:px-10 lg:py-10 bg-gradient-to-r from-slate-50 via-white to-emerald-50/50">
-            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-mono font-bold text-emerald-800 uppercase tracking-widest">
-                  <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                  WORKSPACE COMMAND CENTER
-                </div>
-                <h1 className="mt-4 text-3xl lg:text-4xl font-display font-bold tracking-tight text-slate-900">
-                  AI-Native WhatsApp Marketing &amp; Conversion Dashboard
-                </h1>
-                <p className="mt-3 text-slate-600 text-sm max-w-2xl leading-relaxed">
-                  Your Conversio workspace enables deep Shopify sync, automated abandoned cart recovery, COD confirmation calls via AI Voice agents, and omnichannel CRM.
-                </p>
-              </div>
+      <div className="max-w-7xl mx-auto space-y-8 text-left">
+        {/* Top Control Bar & Workspace Mode Switcher */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-[#070e12] border border-white/10 shadow-lg">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+            <button
+              onClick={() => setActiveView("command")}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+                activeView === "command"
+                  ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+              }`}
+            >
+              <LayoutDashboard className="w-3.5 h-3.5" />
+              Founder Command Center
+            </button>
 
-              <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[420px]">
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs">
-                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500">Connection</p>
-                  <p className="mt-1 text-xs font-bold text-emerald-700">
-                    {connectionSummary}
-                  </p>
-                  <p className="mt-0.5 text-[11px] text-slate-500 font-mono">
-                    {whatsApp.connected ? whatsApp.displayPhoneNumber : "Meta API Active"}
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs">
-                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500">Templates</p>
-                  <p className="mt-1 text-sm font-extrabold text-slate-900">{approvedTemplates} Approved</p>
-                  <p className="mt-0.5 text-[11px] text-slate-500">Ready for broadcast</p>
-                </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs">
-                  <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500">Pipeline Spend</p>
-                  <p className="mt-1 text-sm font-extrabold text-slate-900 font-mono">₹{estimatedPipelineSpend.toLocaleString()}</p>
-                  <p className="mt-0.5 text-[11px] text-slate-500">Active campaigns</p>
-                </div>
-              </div>
-            </div>
+            <button
+              onClick={() => setActiveView("customer360")}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+                activeView === "customer360"
+                  ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+              }`}
+            >
+              <Users className="w-3.5 h-3.5" />
+              Customer 360 &amp; Timeline
+            </button>
+
+            <button
+              onClick={() => setActiveView("pipeline")}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+                activeView === "pipeline"
+                  ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+              }`}
+            >
+              <Trello className="w-3.5 h-3.5" />
+              Sales CRM Pipeline
+            </button>
+
+            <button
+              onClick={() => setActiveView("inbox")}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+                activeView === "inbox"
+                  ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+              }`}
+            >
+              <MessageSquare className="w-3.5 h-3.5" />
+              Omnichannel Inbox
+            </button>
+
+            <button
+              onClick={() => setActiveView("rto")}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all whitespace-nowrap ${
+                activeView === "rto"
+                  ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              RTO Shield
+            </button>
           </div>
-        </motion.div>
 
-        {walletBalance <= lowBalanceThreshold && (
-          <div className="flex items-start gap-3 rounded-2xl border border-warning/30 bg-warning/10 px-5 py-4 text-sm">
-            <AlertTriangle className="h-5 w-5 text-warning mt-0.5" />
-            <div>
-              <p className="font-semibold text-foreground">Low wallet reserve detected</p>
-              <p className="text-muted-foreground">
-                You are nearing the prepaid threshold. Add funds before launching the next campaign to avoid blocked sends.
-              </p>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-mono font-bold flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              Shopify Webhooks Live
+            </span>
+          </div>
+        </div>
+
+        {/* Dynamic View Container */}
+        {activeView === "command" && (
+          <div className="space-y-8">
+            <CommandCenterWidget />
+
+            {/* Quick Link Cards to Modules */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div
+                onClick={() => setActiveView("customer360")}
+                className="p-5 rounded-2xl bg-[#070e12] border border-white/10 hover:border-emerald-500/40 cursor-pointer transition-all space-y-2 group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Users className="w-4 h-4" />
+                </div>
+                <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">Customer 360</h4>
+                <p className="text-xs text-gray-400">Inspect Rahul Sharma's 5 orders, health score 82/100, and replenishment cycle.</p>
+                <div className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1 pt-1">
+                  Open Customer 360 <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
+
+              <div
+                onClick={() => setActiveView("pipeline")}
+                className="p-5 rounded-2xl bg-[#070e12] border border-white/10 hover:border-teal-500/40 cursor-pointer transition-all space-y-2 group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Trello className="w-4 h-4" />
+                </div>
+                <h4 className="text-sm font-bold text-white group-hover:text-teal-300 transition-colors">Sales CRM Deals</h4>
+                <p className="text-xs text-gray-400">Track high-ticket wholesale and custom gifting inquiries across Kanban stages.</p>
+                <div className="text-[11px] text-teal-400 font-semibold flex items-center gap-1 pt-1">
+                  Open Deal Pipeline <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
+
+              <div
+                onClick={() => setActiveView("inbox")}
+                className="p-5 rounded-2xl bg-[#070e12] border border-white/10 hover:border-cyan-500/40 cursor-pointer transition-all space-y-2 group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <MessageSquare className="w-4 h-4" />
+                </div>
+                <h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">Omnichannel Inbox</h4>
+                <p className="text-xs text-gray-400">WhatsApp, Email &amp; Voice calls in one place with AI Autopilot and tool execution.</p>
+                <div className="text-[11px] text-cyan-400 font-semibold flex items-center gap-1 pt-1">
+                  Open Unified Inbox <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
+
+              <div
+                onClick={() => setActiveView("rto")}
+                className="p-5 rounded-2xl bg-[#070e12] border border-white/10 hover:border-emerald-500/40 cursor-pointer transition-all space-y-2 group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">RTO Intelligence</h4>
+                <p className="text-xs text-gray-400">7-factor COD risk scoring, automated WhatsApp ping, and AI Voice verification.</p>
+                <div className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1 pt-1">
+                  Open RTO Shield <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        {(whatsApp.authorizationStatus === "expired" || whatsApp.authorizationStatus === "expiring_soon" || whatsApp.authorizationStatus === "missing") && (
-          <div className={`flex items-start gap-3 rounded-2xl px-5 py-4 text-sm ${
-            whatsApp.authorizationStatus === "expired" || whatsApp.authorizationStatus === "missing"
-              ? "border border-destructive/20 bg-destructive/5"
-              : "border border-warning/30 bg-warning/10"
-          }`}>
-            <AlertTriangle className={`h-5 w-5 mt-0.5 ${
-              whatsApp.authorizationStatus === "expired" || whatsApp.authorizationStatus === "missing"
-                ? "text-destructive"
-                : "text-warning"
-            }`} />
-            <div>
-              <p className="font-semibold text-foreground">
-                {whatsApp.authorizationStatus === "expired"
-                  ? "Meta authorization expired"
-                  : whatsApp.authorizationStatus === "expiring_soon"
-                    ? "Meta authorization expiring soon"
-                    : "Meta authorization missing"}
-              </p>
-              <p className="text-muted-foreground">
-                Reconnect WhatsApp from the connect screen so campaigns, inbox replies, and automations keep sending reliably.
-              </p>
-            </div>
-          </div>
-        )}
+        {activeView === "customer360" && <Customer360Widget />}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <StatCard title="Messages Sent" value={messagesSent.toLocaleString()} icon={Send} trend={{ value: "12% vs last week", positive: true }} />
-          <StatCard title="Cart Recovery Rate" value="24.8%" icon={ShoppingCart} trend={{ value: "+2.4% vs last week", positive: true }} />
-          <StatCard title="Wallet Balance" value={`Rs ${walletBalance.toLocaleString()}`} icon={Wallet} subtitle="Prepaid wallet available now" />
-          <StatCard title="COD Converted to Prepaid" value="₹2,48,200" icon={ShieldCheck} trend={{ value: "RTO saved: 42 orders", positive: true }} />
-        </div>
+        {activeView === "pipeline" && <SalesCrmPipelineWidget />}
 
-        <div className="grid gap-6 lg:grid-cols-[1.4fr,1fr]">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-            className="rounded-[1.5rem] border border-border bg-card shadow-card"
-          >
-            <div className="flex items-center justify-between gap-4 border-b border-border px-6 py-5">
-              <div>
-                <h2 className="font-display text-lg font-semibold text-foreground">Campaign operating board</h2>
-                <p className="text-sm text-muted-foreground mt-1">Recent launches, recipients, and spend posture</p>
-              </div>
-              <Button variant="outline" size="sm" onClick={() => navigate("/campaigns")}>
-                View campaigns
-              </Button>
-            </div>
-            <div className="divide-y divide-border">
-              {campaigns.slice(0, 5).map((campaign) => (
-                <div key={campaign.id} className="px-6 py-5 hover:bg-muted/40 transition-colors">
-                  <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                    <div className="flex items-start gap-4">
-                      <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-                        <MessageSquare className="h-5 w-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">{campaign.name}</p>
-                        <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                          <span className="inline-flex items-center gap-1">
-                            <Users className="h-3.5 w-3.5" />
-                            {campaign.contactIds.length.toLocaleString()} recipients
-                          </span>
-                          <span className="inline-flex items-center gap-1">
-                            <Clock3 className="h-3.5 w-3.5" />
-                            {new Date(campaign.date).toLocaleDateString("en-IN", { dateStyle: "medium" })}
-                          </span>
-                          <span className="inline-flex items-center gap-1">
-                            <Wallet className="h-3.5 w-3.5" />
-                            Rs {campaign.estimatedCost.toLocaleString()}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+        {activeView === "inbox" && <OmnichannelInboxWidget />}
 
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Status</p>
-                        <span
-                          className={`mt-1 inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
-                            campaign.status === "Delivered"
-                              ? "bg-success/10 text-success"
-                              : campaign.status === "Sending"
-                                ? "bg-warning/10 text-warning"
-                                : campaign.status === "Scheduled"
-                                  ? "bg-info/10 text-info"
-                                  : "bg-muted text-muted-foreground"
-                          }`}
-                        >
-                          {campaign.status}
-                        </span>
-                      </div>
-                      <Button variant="ghost" size="sm" className="text-primary" onClick={() => navigate("/campaigns")}>
-                        Open <ArrowUpRight className="h-4 w-4 ml-1" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-              className="rounded-[1.5rem] border border-border bg-card p-6 shadow-card"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-success/10">
-                  <BarChart3 className="h-5 w-5 text-success" />
-                </div>
-                <div>
-                  <h2 className="font-display text-lg font-semibold text-foreground">Performance pulse</h2>
-                  <p className="text-xs text-muted-foreground">High-level metrics for operators and founders</p>
-                </div>
-              </div>
-              <div className="mt-6 space-y-4">
-                {[
-                  { label: "Delivery quality", value: "98.4%", meta: "Strong broadcast health" },
-                  { label: "Average campaign cost", value: "Rs 685", meta: "Pre-send estimate aligned" },
-                  { label: "Ready-to-send inventory", value: `${approvedTemplates} templates`, meta: "Approval coverage is healthy" },
-                ].map((item) => (
-                  <div key={item.label} className="rounded-xl border border-border bg-muted/30 p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-sm text-muted-foreground">{item.label}</span>
-                      <span className="text-sm font-semibold text-foreground">{item.value}</span>
-                    </div>
-                    <p className="mt-2 text-xs text-muted-foreground">{item.meta}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.25 }}
-              className="rounded-[1.5rem] border border-border bg-card p-6 shadow-card"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-info/10">
-                  <ShieldCheck className="h-5 w-5 text-info" />
-                </div>
-                <div>
-                  <h2 className="font-display text-lg font-semibold text-foreground">Platform readiness</h2>
-                  <p className="text-xs text-muted-foreground">What is ready right now in the workspace</p>
-                </div>
-              </div>
-              <div className="mt-6 space-y-4">
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-1" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
-                      {whatsApp.connected ? "WhatsApp connection mapped" : "WhatsApp connection pending"}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {whatsApp.connected ? `${whatsApp.displayPhoneNumber} mapped to workspace` : "Complete Meta setup before scaling campaigns"}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-1" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{businessVerification}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {whatsApp.businessVerificationStatus === "verified" ? "Meta business verification is complete." : "Business verification is tracked separately from connection."}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-1" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{obaSummary}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {whatsApp.obaStatus === "approved" ? "This number has Meta-approved Official Business Account status." : "Green tick only appears if Meta explicitly approves it."}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-1" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Wallet and template controls active</p>
-                    <p className="text-xs text-muted-foreground">Campaign sending is still guarded by balance and template approval state</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-              className="rounded-[1.5rem] border border-border bg-card p-6 shadow-card"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="font-display text-lg font-semibold text-foreground">Recent activity</h2>
-                  <p className="text-xs text-muted-foreground">Operator and system events across the workspace</p>
-                </div>
-              </div>
-              <div className="mt-6 space-y-4">
-                {recentActivity.slice(0, 4).map((item) => (
-                  <div key={item.id} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-4 w-4 text-success mt-1" />
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{item.title}</p>
-                      <p className="text-xs text-muted-foreground">{item.subtitle}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{item.timestamp}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
+        {activeView === "rto" && <RtoIntelligenceWidget />}
       </div>
     </DashboardLayout>
   );

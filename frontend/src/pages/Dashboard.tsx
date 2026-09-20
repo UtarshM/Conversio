@@ -5,6 +5,7 @@ import { Customer360Widget } from "@/components/home/Customer360Widget";
 import { SalesCrmPipelineWidget } from "@/components/home/SalesCrmPipelineWidget";
 import { OmnichannelInboxWidget } from "@/components/home/OmnichannelInboxWidget";
 import { RtoIntelligenceWidget } from "@/components/home/RtoIntelligenceWidget";
+import { OutreachAnalyticsCard } from "@/components/dashboard/OutreachAnalyticsCard";
 import {
   LayoutDashboard,
   Users,
@@ -104,6 +105,9 @@ export default function Dashboard() {
         {activeView === "command" && (
           <div className="space-y-8">
             <CommandCenterWidget />
+
+            {/* RAPIDSALES BENCHMARKED MULTI-CHANNEL SPEND & OUTREACH ANALYTICS */}
+            <OutreachAnalyticsCard />
 
             {/* Quick Link Cards to Modules */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

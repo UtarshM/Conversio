@@ -20,6 +20,8 @@ import { toast } from "@/components/ui/use-toast";
 import { activeApiAdapter } from "@/lib/api";
 import { sendMetaCampaignWithServer } from "@/lib/meta/server";
 
+import { CampaignDeliverySettings } from "@/components/campaigns/CampaignDeliverySettings";
+
 const statusStyles: Record<string, string> = {
   Delivered: "bg-success/10 text-success",
   Sending: "bg-warning/10 text-warning",
@@ -27,7 +29,7 @@ const statusStyles: Record<string, string> = {
   Draft: "bg-muted text-muted-foreground",
 };
 
-const wizardSteps = ["Audience", "Template", "Review"];
+const wizardSteps = ["Audience", "Template", "Delivery", "Review"];
 
 export default function CampaignsPage() {
   const {
@@ -403,6 +405,15 @@ export default function CampaignsPage() {
                 )}
 
                 {step === 2 && (
+                  <div className="space-y-4">
+                    <CampaignDeliverySettings
+                      onBack={() => setStep(1)}
+                      onNext={() => setStep(3)}
+                    />
+                  </div>
+                )}
+
+                {step === 3 && (
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-display text-lg font-semibold text-foreground">Review and approve send</h3>

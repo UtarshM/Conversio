@@ -8,8 +8,12 @@ import { AeoStructuredData } from "@/components/AeoStructuredData";
 import { CalendarBookingModal } from "@/components/CalendarBookingModal";
 
 // Core D2C Modules
+import { CommandCenterWidget } from "@/components/home/CommandCenterWidget";
 import { AiRevenueOpportunitiesWidget } from "@/components/home/AiRevenueOpportunitiesWidget";
 import { Customer360Widget } from "@/components/home/Customer360Widget";
+import { IdentityResolutionWidget } from "@/components/home/IdentityResolutionWidget";
+import { SalesCrmPipelineWidget } from "@/components/home/SalesCrmPipelineWidget";
+import { OmnichannelInboxWidget } from "@/components/home/OmnichannelInboxWidget";
 import { AiActionAgentsWidget } from "@/components/home/AiActionAgentsWidget";
 import { RtoIntelligenceWidget } from "@/components/home/RtoIntelligenceWidget";
 import { CustomerJourneysWidget } from "@/components/home/CustomerJourneysWidget";
@@ -152,9 +156,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Embedded Live Revenue Opportunities Snapshot */}
+            {/* Embedded Live Founder Command Center */}
             <div className="pt-6">
-              <AiRevenueOpportunitiesWidget />
+              <CommandCenterWidget />
             </div>
           </div>
         </section>
@@ -259,42 +263,58 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 3: CUSTOMER 360 & UNIFIED COMMERCE TIMELINE                       */}
+        {/* SECTION 3: CUSTOMER PLATFORM — CUSTOMER 360 & IDENTITY RESOLUTION        */}
         {/* ========================================================================= */}
-        <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
+        <section className="container mx-auto px-4 sm:px-6 max-w-7xl space-y-12">
           <Customer360Widget />
+          <IdentityResolutionWidget />
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 4: AUTOMATE EVERY CUSTOMER JOURNEY                                */}
+        {/* SECTION 4: SALES CRM — OMNICHANNEL DEAL PIPELINE & AUTOMATION            */}
+        {/* ========================================================================= */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <SalesCrmPipelineWidget />
+        </section>
+
+        {/* ========================================================================= */}
+        {/* SECTION 5: UNIFIED OMNICHANNEL INBOX & LIVE CUSTOMER 360 DRAWER          */}
+        {/* ========================================================================= */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <OmnichannelInboxWidget />
+        </section>
+
+        {/* ========================================================================= */}
+        {/* SECTION 6: AUTOMATE EVERY CUSTOMER JOURNEY                                */}
         {/* ========================================================================= */}
         <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <CustomerJourneysWidget />
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 5: AUTONOMOUS AI ACTION AGENTS & MULTI-LINGUAL INTENT             */}
+        {/* SECTION 7: AUTONOMOUS AI ACTION AGENTS & MULTI-LINGUAL INTENT             */}
         {/* ========================================================================= */}
         <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <AiActionAgentsWidget />
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 6: COD & RTO INTELLIGENCE SHIELD                                  */}
+        {/* SECTION 8: COD & RTO INTELLIGENCE SHIELD                                  */}
         {/* ========================================================================= */}
         <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <RtoIntelligenceWidget />
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 7: REVENUE INTELLIGENCE & TRUE ATTRIBUTION                        */}
+        {/* SECTION 9: REVENUE INTELLIGENCE & TRUE ATTRIBUTION                        */}
         {/* ========================================================================= */}
-        <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
+        <section className="container mx-auto px-4 sm:px-6 max-w-7xl space-y-12">
           <RevenueAttributionWidget />
+          <AiRevenueOpportunitiesWidget />
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 8: EXTENDED CHANNELS & SEQUENCE BUILDER                           */}
+        {/* SECTION 10: EXTENDED CHANNELS & SEQUENCE BUILDER                          */}
         {/* ========================================================================= */}
         <section className="container mx-auto px-4 sm:px-6 max-w-7xl space-y-16">
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -314,14 +334,14 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 9: STACK SAVINGS CALCULATOR                                       */}
+        {/* SECTION 11: STACK SAVINGS CALCULATOR                                      */}
         {/* ========================================================================= */}
         <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <StackSavingsCalculator />
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 10: D2C INTEGRATIONS ECOSYSTEM                                    */}
+        {/* SECTION 12: D2C INTEGRATIONS ECOSYSTEM                                    */}
         {/* ========================================================================= */}
         <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <div className="rounded-3xl border border-white/10 bg-[#091014]/90 p-8 sm:p-12 backdrop-blur-2xl">
@@ -359,14 +379,14 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 11: COMPREHENSIVE D2C OBJECTIONS FAQ                              */}
+        {/* SECTION 13: COMPREHENSIVE D2C OBJECTIONS FAQ                              */}
         {/* ========================================================================= */}
         <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <RapidFaqSection />
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 12: HIGH-CONVERSION BOTTOM CTA BANNER                             */}
+        {/* SECTION 14: HIGH-CONVERSION BOTTOM CTA BANNER                             */}
         {/* ========================================================================= */}
         <section className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <div className="relative rounded-3xl border border-emerald-500/30 bg-gradient-to-r from-emerald-950/40 via-[#0a1215] to-teal-950/30 p-8 sm:p-14 text-center overflow-hidden shadow-2xl backdrop-blur-2xl">

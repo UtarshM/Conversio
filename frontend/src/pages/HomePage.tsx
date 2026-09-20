@@ -39,22 +39,6 @@ import {
   Zap,
 } from "lucide-react";
 
-// Social Proof Logos
-const clientLogos = [
-  { name: "L&T", src: "/clients_clean/lt.png" },
-  { name: "Indian Oil", src: "/clients_clean/indianoil.png" },
-  { name: "GMM Pfaudler", src: "/clients_clean/gmm.png" },
-  { name: "ACG Pharma", src: "/clients_clean/acg.png" },
-  { name: "Cybernetik", src: "/clients_clean/cybernetik.png" },
-  { name: "Indo MIM", src: "/clients_clean/indomim.png" },
-  { name: "Vulkan", src: "/clients_clean/vulkan.png" },
-  { name: "Gansons", src: "/clients_clean/gansons.png" },
-  { name: "Surya", src: "/clients_clean/surya.png" },
-  { name: "Standard Glass", src: "/clients_clean/standardglass.png" },
-  { name: "Metal Forms", src: "/clients_clean/metalforms.png" },
-  { name: "Bioaspire", src: "/clients_clean/bioaspire.png" },
-];
-
 export default function HomePage() {
   // Calendar Modal State
   const [calendarModalOpen, setCalendarModalOpen] = useState(false);
@@ -512,29 +496,6 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SOCIAL PROOF MARQUEE BANNER                                               */}
-      {/* ========================================================================= */}
-      <section className="py-14 bg-slate-950/70 border-y border-white/10 relative z-10">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 font-mono mb-8">
-            TRUSTED BY 700+ HIGH-GROWTH D2C BRANDS &amp; ENTERPRISE LEADERS
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 opacity-70 hover:opacity-100 transition-opacity">
-            {clientLogos.map((client) => (
-              <div
-                key={client.name}
-                className="h-12 px-4 py-2 bg-slate-900/80 border border-white/10 rounded-2xl flex items-center justify-center hover:border-emerald-500/40 hover:bg-slate-800/90 transition-all shadow-md backdrop-blur-lg group"
-              >
-                <img
-                  src={client.src}
-                  alt={client.name}
-                  className="max-h-7 max-w-[110px] object-contain opacity-80 group-hover:opacity-100 hover:opacity-100 transition-all"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ========================================================================= */}
       {/* SECTION 2: CONVERSIO D2C E-COMMERCE RETENTION                             */}

@@ -7,49 +7,10 @@ import {
   Sparkles,
 } from "lucide-react";
 
-const clientLogos = [
-  { name: "L&T", src: "/clients_clean/lt.png" },
-  { name: "Indian Oil", src: "/clients_clean/indianoil.png" },
-  { name: "GMM Pfaudler", src: "/clients_clean/gmm.png" },
-  { name: "ACG Pharma", src: "/clients_clean/acg.png" },
-  { name: "Cybernetik", src: "/clients_clean/cybernetik.png" },
-  { name: "Indo MIM", src: "/clients_clean/indomim.png" },
-  { name: "Vulkan", src: "/clients_clean/vulkan.png" },
-  { name: "Gansons", src: "/clients_clean/gansons.png" },
-  { name: "Surya", src: "/clients_clean/surya.png" },
-  { name: "Standard Glass", src: "/clients_clean/standardglass.png" },
-  { name: "Metal Forms", src: "/clients_clean/metalforms.png" },
-  { name: "Bioaspire", src: "/clients_clean/bioaspire.png" },
-];
-
 export function PublicFooter() {
   return (
     <footer className="bg-slate-950 text-slate-300 font-sans border-t border-slate-800 text-left pt-16 pb-12 px-6">
       <div className="container mx-auto max-w-7xl">
-        
-        {/* TRUSTED CLIENT LOGOS BANNER */}
-        <div className="mb-14 pb-12 border-b border-slate-800/80">
-          <div className="text-center space-y-2 mb-8">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest font-mono">
-              TRUSTED BY 700+ ENTERPRISE &amp; D2C BRANDS
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-80 hover:opacity-100 transition-opacity">
-            {clientLogos.map((client) => (
-              <div
-                key={client.name}
-                className="h-10 px-4 py-2 bg-slate-900/90 border border-slate-800 rounded-xl flex items-center justify-center hover:border-emerald-500/50 hover:bg-slate-800/80 transition-all group"
-              >
-                <img
-                  src={client.src}
-                  alt={client.name}
-                  className="max-h-6 max-w-[100px] object-contain opacity-75 group-hover:opacity-100 transition-opacity"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
           
           {/* COLUMN 1: Brand, Official Meta Partner Badge, Parent Company */}

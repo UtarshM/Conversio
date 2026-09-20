@@ -90,8 +90,28 @@ export default function SignupPage() {
               Recover abandoned carts, eliminate COD RTO losses, predict product replenishment, and automate customer conversations with AI.
             </p>
 
+            {/* Product Mockup Showcase Card */}
+            <div className="relative rounded-3xl overflow-hidden border border-emerald-500/20 shadow-2xl bg-black/40 group">
+              <img
+                src="/home/dashboard_mockup.png"
+                alt="Conversio Outreach Analytics & Campaign Engine"
+                className="w-full h-48 sm:h-56 object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#04080a] via-transparent to-transparent opacity-80" />
+              <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                <span className="text-[11px] font-mono text-emerald-300 font-bold bg-black/70 px-2.5 py-1 rounded-lg border border-emerald-500/30 backdrop-blur-md">
+                  48,291 Customer Profiles Loaded
+                </span>
+                <img
+                  src="/home/meta-partner-badge.avif"
+                  alt="Meta Business Partner"
+                  className="h-7 object-contain drop-shadow"
+                />
+              </div>
+            </div>
+
             {/* Metric Highlights */}
-            <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-2 gap-3 pt-1">
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-1">
                 <span className="text-emerald-400 text-xl font-bold font-mono">24.8%</span>
                 <p className="text-xs text-gray-300">Cart Recovery Rate</p>

@@ -108,6 +108,26 @@ export default function BookDemoPage() {
                 </p>
               </div>
 
+              {/* Product Preview Mockup */}
+              <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black/40 group">
+                <img
+                  src="/home/inbox_feature.jpg"
+                  alt="Conversio Live Platform Walkthrough"
+                  className="w-full h-48 sm:h-52 object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-emerald-400 font-bold bg-black/75 px-2.5 py-1 rounded-lg border border-emerald-500/30 backdrop-blur-md">
+                    25-Minute Live Interactive Demo
+                  </span>
+                  <img
+                    src="/home/meta-partner-badge.avif"
+                    alt="Meta Business Partner"
+                    className="h-6 object-contain"
+                  />
+                </div>
+              </div>
+
               {/* What you'll get checklist */}
               <div className="rounded-3xl bg-slate-900/70 border border-white/10 p-6 space-y-4 backdrop-blur-xl">
                 <h3 className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-400">

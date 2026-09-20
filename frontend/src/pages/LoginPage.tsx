@@ -105,6 +105,26 @@ export default function LoginPage() {
               </div>
             </div>
 
+            {/* Product Mockup Showcase Card */}
+            <div className="relative rounded-3xl overflow-hidden border border-emerald-500/20 shadow-2xl bg-black/40 group">
+              <img
+                src="/home/login_hero.jpg"
+                alt="Conversio AI Revenue OS"
+                className="w-full h-48 sm:h-56 object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#04080a] via-transparent to-transparent opacity-80" />
+              <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                <span className="text-[11px] font-mono text-emerald-300 font-bold bg-black/70 px-2.5 py-1 rounded-lg border border-emerald-500/30 backdrop-blur-md">
+                  Shopify Store Live Sync Active
+                </span>
+                <img
+                  src="/home/meta-partner-badge.avif"
+                  alt="Meta Business Partner"
+                  className="h-7 object-contain drop-shadow"
+                />
+              </div>
+            </div>
+
             {/* Instant Demo Access Hero Card */}
             <div className="p-5 bg-gradient-to-br from-emerald-950/40 via-[#071217] to-teal-950/30 border border-emerald-500/30 rounded-3xl space-y-3 shadow-xl backdrop-blur-xl">
               <div className="flex items-center justify-between">

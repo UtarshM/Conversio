@@ -135,10 +135,10 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Hero Interactive Executive Dashboard Preview */}
-          <div className="mt-14 relative rounded-3xl border border-white/15 bg-gradient-to-b from-[#0e171b] to-[#04080a] p-4 sm:p-8 shadow-2xl shadow-emerald-500/10 backdrop-blur-2xl">
-            {/* Top Bar with Status Indicators */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
+          {/* Hero Interactive Executive Dashboard Preview with Real Product Mockup */}
+          <div className="mt-14 relative rounded-3xl border border-white/15 bg-gradient-to-b from-[#0e171b] to-[#04080a] p-4 sm:p-6 shadow-2xl shadow-emerald-500/10 backdrop-blur-2xl overflow-hidden group">
+            {/* Top Bar with Browser Dots & URL */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
               <div className="flex items-center gap-3">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-red-500/60" />
@@ -148,7 +148,7 @@ export default function HomePage() {
                 <span className="text-xs text-gray-400 font-mono">conversio.scalezix.com/dashboard</span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                   Shopify Store Live Sync Active
@@ -156,9 +156,44 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Embedded Live Founder Command Center */}
-            <div className="pt-6">
-              <CommandCenterWidget />
+            {/* High-Resolution Dashboard Mockup Image Showcase */}
+            <div className="pt-4 relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-inner">
+              <img
+                src="/home/dashboard_mockup.png"
+                alt="Conversio Outreach Analytics & Daily Spend Dashboard"
+                className="w-full h-auto object-cover rounded-xl shadow-2xl transition-transform duration-700 group-hover:scale-[1.01]"
+              />
+
+              {/* Floating Live Telemetry Badges */}
+              <div className="absolute top-4 right-4 hidden md:flex items-center gap-2">
+                <div className="px-3 py-1.5 rounded-xl bg-black/75 border border-white/20 backdrop-blur-md text-white text-xs font-mono font-bold shadow-xl flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Credits: ₹82,559.76</span>
+                </div>
+                <div className="px-3 py-1.5 rounded-xl bg-black/75 border border-white/20 backdrop-blur-md text-emerald-400 text-xs font-mono font-bold shadow-xl">
+                  <span>18.4% Reply Rate</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Social Proof: Real Client Logos & Meta Tech Partner Badge */}
+          <div className="mt-14 text-center space-y-4">
+            <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">
+              TRUSTED BY 700+ ENTERPRISES &amp; FASTEST GROWING D2C BRANDS ACROSS INDIA
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 py-6 px-6 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-xl">
+              <img src="/clients_clean/indianoil.png" alt="Indian Oil" className="h-6 sm:h-8 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <img src="/clients_clean/acg.png" alt="ACG Pharma" className="h-6 sm:h-8 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <img src="/clients_clean/gmm.png" alt="GMM Pfaudler" className="h-5 sm:h-7 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <img src="/clients_clean/cybernetik.png" alt="Cybernetik" className="h-5 sm:h-7 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <img src="/clients_clean/indomim.png" alt="Indo-MIM" className="h-5 sm:h-7 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <img src="/clients_clean/vulkan.png" alt="Vulkan" className="h-5 sm:h-7 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <img src="/clients_clean/standardglass.png" alt="Standard Glass" className="h-5 sm:h-7 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <img src="/clients_clean/lt.png" alt="L&T" className="h-5 sm:h-7 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <img src="/clients_clean/gansons.png" alt="Gansons" className="h-5 sm:h-7 object-contain opacity-70 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+              <div className="h-6 w-px bg-white/10 hidden sm:block" />
+              <img src="/home/meta-partner-badge.avif" alt="Official Meta Tech Provider" className="h-7 sm:h-9 object-contain hover:scale-105 transition-transform" />
             </div>
           </div>
         </section>
@@ -181,80 +216,116 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Pillar 1: RECOVER */}
-            <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-6 flex flex-col justify-between hover:border-emerald-500/40 hover:bg-white/[0.03] transition-all group">
+            <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-5 flex flex-col justify-between hover:border-emerald-500/40 hover:bg-white/[0.03] transition-all group overflow-hidden shadow-lg">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
-                  <ShoppingBag className="w-6 h-6" />
+                <div className="rounded-2xl overflow-hidden mb-4 border border-white/10 shadow-md bg-black/40">
+                  <img
+                    src="/blog/cart_recovery.jpg"
+                    alt="Autonomous Cart Recovery Engine"
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
-                  Pillar 01
-                </span>
-                <h3 className="text-xl font-bold text-white mt-2 mb-2">Recover Lost Revenue</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                    Pillar 01
+                  </span>
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                    <ShoppingBag className="w-4 h-4" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Recover Lost Revenue</h3>
                 <p className="text-xs text-gray-400 leading-relaxed">
                   Autonomous 3-tier cart recovery across WhatsApp, email, and AI voice. Reclaims abandoned checkouts with instant 1-click UPI checkout links.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-white/5 text-xs text-emerald-400 font-semibold flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-white/5 text-xs text-emerald-400 font-semibold flex items-center justify-between">
                 <span>Cart Recovery Rate</span>
                 <span className="font-mono font-bold text-sm">24.8%</span>
               </div>
             </div>
 
             {/* Pillar 2: RETAIN */}
-            <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-6 flex flex-col justify-between hover:border-teal-500/40 hover:bg-white/[0.03] transition-all group">
+            <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-5 flex flex-col justify-between hover:border-teal-500/40 hover:bg-white/[0.03] transition-all group overflow-hidden shadow-lg">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 mb-4 group-hover:scale-110 transition-transform">
-                  <RotateCcw className="w-6 h-6" />
+                <div className="rounded-2xl overflow-hidden mb-4 border border-white/10 shadow-md bg-black/40">
+                  <img
+                    src="/home/inbox_feature.jpg"
+                    alt="Customer 360 & Unified Omnichannel Inbox"
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded">
-                  Pillar 02
-                </span>
-                <h3 className="text-xl font-bold text-white mt-2 mb-2">Retain & Replenish</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded">
+                    Pillar 02
+                  </span>
+                  <div className="w-8 h-8 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center">
+                    <RotateCcw className="w-4 h-4" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Retain &amp; Replenish</h3>
                 <p className="text-xs text-gray-400 leading-relaxed">
                   Predictive reorder engine calculates daily product depletion rates and triggers replenishment alerts right before the customer runs out.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-white/5 text-xs text-teal-400 font-semibold flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-white/5 text-xs text-teal-400 font-semibold flex items-center justify-between">
                 <span>Repeat Orders Lift</span>
                 <span className="font-mono font-bold text-sm">+31.2%</span>
               </div>
             </div>
 
             {/* Pillar 3: CONVERT */}
-            <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-6 flex flex-col justify-between hover:border-cyan-500/40 hover:bg-white/[0.03] transition-all group">
+            <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-5 flex flex-col justify-between hover:border-cyan-500/40 hover:bg-white/[0.03] transition-all group overflow-hidden shadow-lg">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition-transform">
-                  <Sparkles className="w-6 h-6" />
+                <div className="rounded-2xl overflow-hidden mb-4 border border-white/10 shadow-md bg-black/40">
+                  <img
+                    src="/blog/ai_voice.jpg"
+                    alt="AI Voice Calling Dialer & Inbound Sales Agent"
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded">
-                  Pillar 03
-                </span>
-                <h3 className="text-xl font-bold text-white mt-2 mb-2">Convert Inbound Intent</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded">
+                    Pillar 03
+                  </span>
+                  <div className="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Convert Inbound Intent</h3>
                 <p className="text-xs text-gray-400 leading-relaxed">
                   Autonomous AI sales agents answer product queries, match shades, check stock, and curate pre-filled carts directly in WhatsApp.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-white/5 text-xs text-cyan-400 font-semibold flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-white/5 text-xs text-cyan-400 font-semibold flex items-center justify-between">
                 <span>Inbound Chat Conversion</span>
                 <span className="font-mono font-bold text-sm">18.4%</span>
               </div>
             </div>
 
             {/* Pillar 4: REPEAT */}
-            <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-6 flex flex-col justify-between hover:border-emerald-500/40 hover:bg-white/[0.03] transition-all group">
+            <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-5 flex flex-col justify-between hover:border-emerald-500/40 hover:bg-white/[0.03] transition-all group overflow-hidden shadow-lg">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
-                  <ShieldCheck className="w-6 h-6" />
+                <div className="rounded-2xl overflow-hidden mb-4 border border-white/10 shadow-md bg-black/40">
+                  <img
+                    src="/blog/rto_reduction.jpg"
+                    alt="RTO Shield & Secure Delivery Intelligence"
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
-                  Pillar 04
-                </span>
-                <h3 className="text-xl font-bold text-white mt-2 mb-2">Repeat & Defend COD</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                    Pillar 04
+                  </span>
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Repeat &amp; Defend COD</h3>
                 <p className="text-xs text-gray-400 leading-relaxed">
                   Automated 60-day win-back campaigns and 7-factor COD risk scoring to slash return-to-origin losses before dispatch.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-white/5 text-xs text-emerald-400 font-semibold flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-white/5 text-xs text-emerald-400 font-semibold flex items-center justify-between">
                 <span>RTO Losses Prevented</span>
                 <span className="font-mono font-bold text-sm">-65.4%</span>
               </div>
@@ -330,6 +401,45 @@ export default function HomePage() {
           </div>
 
           <SequenceBuilderWidget />
+
+          {/* RapidSales Benchmarked Campaign Delivery Showcase */}
+          <div className="rounded-3xl border border-white/10 bg-[#091014]/80 p-6 sm:p-10 shadow-2xl backdrop-blur-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-5 space-y-4 text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#ea580c] text-xs font-semibold uppercase tracking-wider font-mono">
+                  <ShieldCheck className="w-3.5 h-3.5" /> Meta Anti-Ban Safeguards
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                  Anti-Ban Delivery &amp; Natural Human Jitter
+                </h3>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Eliminate carrier throttling and Meta number suspensions with configurable audience batching (25 recipients / 5 min gaps) and randomized natural human jitter delays (5s–10s) between messages.
+                </p>
+                <div className="space-y-2 pt-2 text-xs text-gray-300">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Automatic failed message retry with template fallback</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Dynamic volume throttling preserving High Quality Meta Tier</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Zero spam risk with Stop-on-Reply opt-out compliance</span>
+                  </div>
+                </div>
+              </div>
+              <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white/5">
+                <img
+                  src="/home/campaign_delivery_mockup.png"
+                  alt="Campaign Delivery Settings with Anti-Ban Human Jitter"
+                  className="w-full h-auto object-cover rounded-xl hover:scale-[1.02] transition-transform duration-500"
+                />
+              </div>
+            </div>
+          </div>
+
           <ChannelsDeepDive />
         </section>
 

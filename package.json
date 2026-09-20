@@ -8,7 +8,7 @@
     "partner-portal"
   ],
   "scripts": {
-    "build": "npm run build --prefix frontend && mkdir -p dist && cp -r frontend/dist/* dist/",
+    "build": "npm run build --prefix frontend && mkdir -p dist && cp -r frontend/dist/* dist/ && cp frontend/dist/index.html dist/404.html 2>/dev/null || true",
     "dev": "npm run dev --prefix frontend",
     "dev:frontend": "npm run dev --prefix frontend",
     "dev:backend": "npm run dev --prefix backend",

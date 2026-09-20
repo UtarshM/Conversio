@@ -49,6 +49,13 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
+const getBasename = () => {
+  if (typeof window !== "undefined" && window.location.pathname.toLowerCase().startsWith("/conversio")) {
+    return "/Conversio";
+  }
+  return "/";
+};
+
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
@@ -56,7 +63,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter basename={getBasename()}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/home" element={<HomePage />} />

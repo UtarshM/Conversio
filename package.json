@@ -1,0 +1,18 @@
+{
+  "name": "conversio-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "partner-portal"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:partner": "npm run dev --prefix partner-portal",
+    "build:frontend": "npm run build --prefix frontend",
+    "build:backend": "npm run build --prefix backend",
+    "build:partner": "npm run build --prefix partner-portal"
+  }
+}

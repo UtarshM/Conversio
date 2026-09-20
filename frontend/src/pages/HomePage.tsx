@@ -6,6 +6,13 @@ import { PublicNavbar } from "@/components/PublicNavbar";
 import { PublicFooter } from "@/components/PublicFooter";
 import { AeoStructuredData } from "@/components/AeoStructuredData";
 import { CalendarBookingModal } from "@/components/CalendarBookingModal";
+import { SequenceBuilderWidget } from "@/components/home/SequenceBuilderWidget";
+import { LeadCaptureHub } from "@/components/home/LeadCaptureHub";
+import { AppointmentBookingWidget } from "@/components/home/AppointmentBookingWidget";
+import { ChannelsDeepDive } from "@/components/home/ChannelsDeepDive";
+import { IndustrySolutions } from "@/components/home/IndustrySolutions";
+import { StackSavingsCalculator } from "@/components/home/StackSavingsCalculator";
+import { RapidFaqSection } from "@/components/home/RapidFaqSection";
 import {
   ArrowRight,
   BarChart3,
@@ -792,126 +799,103 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 3: CONVERSIO TRI-CHANNEL OUTBOUND SALES                           */}
+      {/* SECTION 3: CONVERSIO TRI-CHANNEL OUTBOUND SALES & AUTONOMOUS AGENTS       */}
       {/* ========================================================================= */}
       <section id="tri-channel-sales" className="py-24 sm:py-32 bg-slate-950/90 border-t border-white/10 relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
-          {/* Section Heading */}
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs font-mono font-bold mb-4 border border-blue-500/40">
-              <Flame className="w-3.5 h-3.5" /> CONVERSIO TRI-CHANNEL OUTBOUND ENGINE
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl space-y-20 sm:space-y-28">
+          
+          {/* Main Section Header */}
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-400 text-xs font-mono font-bold mb-5 border border-blue-500/30">
+              <Flame className="w-4 h-4 text-orange-400" /> CONVERSIO TRI-CHANNEL REVENUE &amp; SALES ENGINE
             </div>
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight leading-tight">
-              Tri-Channel Sales Outreach: WhatsApp + Email + AI Voice
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-extrabold text-white tracking-tight leading-tight">
+              Automate Email, WhatsApp &amp; AI Calls <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
+                From One Autonomous Sales Dashboard
+              </span>
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg mt-4">
-              Conversio turns cold and warm leads into booked appointments. Execute multi-touch cadences across three channels, stop drips automatically the moment a prospect replies, and respond in under 60 seconds.
+            <p className="text-slate-300 text-sm sm:text-lg mt-5 max-w-3xl mx-auto leading-relaxed">
+              70% of sales time gets lost when teams manage leads across separate platforms. Conversio brings your outreach together: launch email campaigns, send WhatsApp messages, run AI-powered voice calls, and track every touchpoint from one place.
             </p>
-          </div>
 
-          {/* GRID: 3 RAPIDSALES PILLARS */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {/* Pillar 1: Tri-Channel Cadences */}
-            <div id="rapidsales-tri" className="rounded-[32px] bg-slate-900/70 border border-white/10 p-7 flex flex-col justify-between backdrop-blur-xl hover:border-blue-500/40 transition-all">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-5 border border-blue-500/30">
-                  <Layers className="w-6 h-6" />
+            {/* 4 Feature Highlights Strip from RapidSales */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 text-left">
+              <div className="p-4 rounded-2xl bg-slate-900/60 border border-white/10 flex items-start gap-3 backdrop-blur-xl">
+                <div className="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <Layers className="w-4 h-4" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2 font-display">
-                  Unified Tri-Channel Cadences
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Don't rely on email alone when open rates are below 15%. Conversio orchestrates WhatsApp pings, contextual emails, and conversational AI phone calls into a cohesive cadence.
-                </p>
-                <div className="mt-5 pt-4 border-t border-white/10 space-y-2 text-xs font-mono text-slate-300">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> WhatsApp Message (98% Open)
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-blue-400" /> Executive Email Summary
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-purple-400" /> AI Outbound Voice Dialer
-                  </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white">Tri-Channel Outreach</h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Sync Email, WhatsApp &amp; Voice</p>
                 </div>
               </div>
 
-              <div className="mt-6 pt-5 border-t border-white/10">
-                <Button
-                  onClick={() => openDemoModalWithPlan("Growth Tri-Channel")}
-                  className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs h-11 rounded-2xl cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.35)]"
-                >
-                  Demo Tri-Channel Cadence
-                </Button>
-              </div>
-            </div>
-
-            {/* Pillar 2: Stop-on-Reply Engine */}
-            <div id="rapidsales-stop" className="rounded-[32px] bg-slate-900/70 border border-white/10 p-7 flex flex-col justify-between backdrop-blur-xl hover:border-orange-500/40 transition-all">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/20 text-orange-400 flex items-center justify-center mb-5 border border-orange-500/30">
-                  <Zap className="w-6 h-6" />
+              <div className="p-4 rounded-2xl bg-slate-900/60 border border-white/10 flex items-start gap-3 backdrop-blur-xl">
+                <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <PhoneCall className="w-4 h-4" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2 font-display">
-                  Stop-on-Reply Automation
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Nothing ruins a deal like sending an automated "Did you see my email?" after the client already replied on WhatsApp. Conversio halts all remaining sequence steps instantly across every channel.
-                </p>
-                <div className="mt-5 pt-4 border-t border-white/10 p-3.5 bg-slate-950 rounded-2xl border border-white/10 text-xs font-mono">
-                  <span className="text-orange-400 font-bold block">Cross-Channel Reply Detected:</span>
-                  <span className="text-slate-300 text-[11px] block mt-1">
-                    "Thanks, let's talk next Monday."
-                  </span>
-                  <span className="text-emerald-400 text-[10px] block mt-1 font-bold">
-                    ✓ Email 3 &amp; Call 2 Canceled • Rep Notified
-                  </span>
+                <div>
+                  <h4 className="text-xs font-bold text-white">Human-Like AI Voice</h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Calls that sound 100% real</p>
                 </div>
               </div>
 
-              <div className="mt-6 pt-5 border-t border-white/10">
-                <Button
-                  onClick={() => openDemoModalWithPlan("Growth Tri-Channel")}
-                  className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs h-11 rounded-2xl cursor-pointer border border-white/10"
-                >
-                  Explore Stop-on-Reply
-                </Button>
-              </div>
-            </div>
-
-            {/* Pillar 3: AI Outbound Appointment Booking */}
-            <div id="rapidsales-booking" className="rounded-[32px] bg-slate-900/70 border border-white/10 p-7 flex flex-col justify-between backdrop-blur-xl hover:border-emerald-500/40 transition-all">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-5 border border-emerald-500/30">
-                  <Calendar className="w-6 h-6" />
+              <div className="p-4 rounded-2xl bg-slate-900/60 border border-white/10 flex items-start gap-3 backdrop-blur-xl">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <Zap className="w-4 h-4" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2 font-display">
-                  AI Appointment Booking
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Our AI voice agents don't just broadcast messages; they qualify inbound interest, check your team's live Google/Outlook Calendar, and secure confirmed meetings on the spot.
-                </p>
-                <div className="mt-5 pt-4 border-t border-white/10 space-y-1.5 text-xs font-mono text-slate-300">
-                  <div className="text-emerald-400">✓ Real-time calendar availability check</div>
-                  <div className="text-emerald-400">✓ Google Meet / Zoom link dispatch</div>
-                  <div className="text-emerald-400">✓ WhatsApp reminder with 1-click reschedule</div>
+                <div>
+                  <h4 className="text-xs font-bold text-white">Smart Handoff</h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Stops on reply &amp; alerts reps</p>
                 </div>
               </div>
 
-              <div className="mt-6 pt-5 border-t border-white/10">
-                <Button
-                  onClick={() => openDemoModalWithPlan("Growth Tri-Channel")}
-                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs h-11 rounded-2xl cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                >
-                  Connect Calendar Demo
-                </Button>
+              <div className="p-4 rounded-2xl bg-slate-900/60 border border-white/10 flex items-start gap-3 backdrop-blur-xl">
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <CalendarCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white">Unified Timeline</h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Every interaction in one view</p>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* INTERACTIVE SPEED-TO-LEAD (<60s) STOPWATCH WIDGET */}
-          <div className="rounded-[32px] bg-slate-950 border border-white/10 p-7 sm:p-10 text-center max-w-3xl mx-auto shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+          {/* FEATURE 1: VISUAL MULTI-CHANNEL SEQUENCE BUILDER */}
+          <div id="sequence-builder">
+            <SequenceBuilderWidget onOpenDemo={openDemoModalWithPlan} />
+          </div>
+
+          {/* FEATURE 2: PLATFORM LEAD CAPTURE FROM EVERY SOURCE */}
+          <div id="lead-capture">
+            <LeadCaptureHub onOpenDemo={openDemoModalWithPlan} />
+          </div>
+
+          {/* FEATURE 3: THREE CHANNELS DEEP DIVE (AI VOICE, WHATSAPP, EMAIL) */}
+          <div id="channel-capabilities">
+            <ChannelsDeepDive onOpenDemo={openDemoModalWithPlan} />
+          </div>
+
+          {/* FEATURE 4: AI APPOINTMENT BOOKING SIMULATOR */}
+          <div id="appointment-booking">
+            <AppointmentBookingWidget onOpenDemo={openDemoModalWithPlan} />
+          </div>
+
+          {/* FEATURE 5: TAILORED INDUSTRY BLUEPRINTS */}
+          <div id="industry-solutions">
+            <IndustrySolutions onOpenDemo={openDemoModalWithPlan} />
+          </div>
+
+          {/* FEATURE 6: CONSOLIDATED STACK SAVINGS CALCULATOR */}
+          <div id="stack-savings">
+            <StackSavingsCalculator onOpenDemo={openDemoModalWithPlan} />
+          </div>
+
+          {/* FEATURE 7: INTERACTIVE SPEED-TO-LEAD (<60s) STOPWATCH BENCHMARK */}
+          <div className="rounded-[32px] bg-slate-950 border border-white/10 p-7 sm:p-12 text-center max-w-3xl mx-auto shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-36 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
 
             <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 font-bold block mb-2">
               SPEED-TO-LEAD BENCHMARK
@@ -920,7 +904,7 @@ export default function HomePage() {
               Under 60 Seconds: Why Speed Dictates Closing Rates
             </h3>
             <p className="text-xs sm:text-sm text-slate-400 mt-2 max-w-xl mx-auto">
-              Harvard Business Review proves responding to a lead in under 5 minutes makes you 21x more likely to qualify them. Conversio responds in under 48 seconds.
+              Harvard Business Review proves responding to an incoming lead in under 5 minutes makes you 21x more likely to qualify them. Conversio automates this in under 48 seconds.
             </p>
 
             {/* Stopwatch Display */}
@@ -944,6 +928,12 @@ export default function HomePage() {
               {simulatingSpeed ? "Running Sub-60s Simulation..." : "Test Speed-to-Lead Response"}
             </Button>
           </div>
+
+          {/* FEATURE 8: FREQUENTLY ASKED QUESTIONS ACCORDION */}
+          <div id="faq">
+            <RapidFaqSection />
+          </div>
+
         </div>
       </section>
 
